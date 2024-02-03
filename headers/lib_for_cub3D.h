@@ -7,6 +7,8 @@
 # include <stdio.h> // perror();
 # include <mlx.h>
 
+# define SIZE_WIDTH_WINDOW_X 640
+# define SIZE_HIGH_WINDOW_Y 480
 # define BUFFER_SIZE_FOR_GNL 100
 
 typedef struct s_point
@@ -22,8 +24,8 @@ typedef struct s_data
 	char	*joined_str;
 	char	**splitted_str_1;
 	int		xpm_size;
-	int		x_of_window;
-	int		y_of_window;
+	//int		x_of_window;
+	//int		y_of_window;
 	void	*img_of_wall;
 	void	*img_of_collectible;
 	void	*img_of_exit_red;
@@ -34,6 +36,7 @@ typedef struct s_data
 	void	*img_of_enemy_2;
 	void	*img_of_enemy_3;
 	void	*img_of_enemy_4;
+	void 	*img_wall;
 	char	**splitted_str;
 	int		player_coord_x;
 	int		player_coord_y;
@@ -68,7 +71,7 @@ size_t	ft_gstrlen(char	*s);
 //addition1
 char	*ft_joined_lines_from_gnl(char *argv[]);
 void	ft_put_error(char *string);
-int		ft_y_for_mlxwin_size(char **splitted_str);
+//int		ft_y_for_mlxwin_size(char **splitted_str);
 void	ft_put_movement_count(t_data *game);
 //addition2
 int		ft_keypress_only_esc(int key, t_data *game);
