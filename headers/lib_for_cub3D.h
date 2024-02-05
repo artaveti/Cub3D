@@ -8,7 +8,12 @@
 # include <mlx.h>
 
 # define SIZE_WIDTH_WINDOW_X 640
-# define SIZE_HIGH_WINDOW_Y 480
+# define SIZE_HEIGHT_WINDOW_Y 480
+# define SIZE_OF_PIXEL 40
+# define KEY_W 0
+# define KEY_S 2
+# define KEY_A 13
+# define KEY_D 1
 # define BUFFER_SIZE_FOR_GNL 100
 
 typedef struct s_point
@@ -24,6 +29,8 @@ typedef struct s_data
 	char	*joined_str;
 	char	**splitted_str_1;
 	int		xpm_size;
+double px;
+double py;
 	//int		x_of_window;
 	//int		y_of_window;
 	void	*img_of_wall;
