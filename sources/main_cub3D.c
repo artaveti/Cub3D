@@ -22,29 +22,36 @@ int	main(int argc, char *argv[])
 	if (game.mlx_win == NULL)
 		exit(EXIT_FAILURE);
 
-//mlx_pixel_put(game.mlx, game.mlx_win, 0, 0, 0xFFFFFF);
 
-// int i;
-// int j;
+game.px = 160;
+game.py = 160;
+//game.pa = 0;
+game.pdx = cos(game.pa * 5);
+game.pdy = sin(game.pa * 5);
+printf("angle:%f\npdx:%f\npdy:%f\n\n",game.pa, game.pdx, game.pdy);
 
-// i = 0;
-// while(i < SIZE_WIDTH_WINDOW_X)
-// {
-// 	j = 0;
-// 	while (j < SIZE_HEIGHT_WINDOW_Y / 2)
-// 	{
-// 		//printf("(%d ::: %d ::: %d)\n", i, j, mlx_pixel_put(game.mlx, game.mlx_win, i, j, 0xFFFFFF));
-// 		j++;
-// 	}
-// 	i++;
-// }
 
-game.px = 360;
-game.py = 360;
+int x;
+int y;
+
+x = 0;
+while(x < SIZE_WIDTH_WINDOW_X)
+{
+	y = 0;
+	while(y < SIZE_HEIGHT_WINDOW_Y)
+	{
+		mlx_pixel_put(game.mlx, game.mlx_win, x, y, 0xA0A0A0);
+		y++;
+	}
+	x++;
+}
+
 
 ft_put_pixel_to_window_for_map(&game);
 //ft_put_pixel_to_window_for_player(&game);
-ft_put_pixel_to_window_by_size(game.px, game.py, 0x00FFFF00, &game);
+mlx_pixel_put(game.mlx, game.mlx_win, game.px, game.py, 0x00FFFF00); // for player one pixel;
+//mlx_pixel_put(game.mlx, game.mlx_win, game.pdx, game.pdy, 0x00FFFF00); // for player one pixel;
+//ft_put_pixel_to_window_by_size(game.px, game.py, 0x00FFFF00, &game); // for player;
 mlx_key_hook (game.mlx_win, &ft_player_move, &game);
 
 	ft_xpm_file_to_image(&game);
@@ -66,17 +73,39 @@ int ft_player_move(int key, t_data	*game)
 {
 	if (key == KEY_A || key == KEY_D || key == KEY_W || key == KEY_S)
 	{	
-		ft_put_pixel_to_window_by_size(game->px, game->py, 0x000000, game);
+		printf("px:%f\npy:%f\n\n",game->px, game->py);
+		printf("pdx:%f\npdy:%f\n",game->pdx, game->pdy);
+		printf("angle:%f\n\n",game->pa);
+		mlx_pixel_put(game->mlx, game->mlx_win, game->px, game->py, 0x000000); // for player one pixel before move;
+		//mlx_pixel_put(game->mlx, game->mlx_win, game->pdx, game->pdy, 0x000000); // for direction one pixel before move;
+		//ft_put_pixel_to_window_by_size(game->px, game->py, 0x000000, game);
 		//mlx_pixel_put(game->mlx, game->mlx_win, game->px, game->py, 0x000000);
+
 		if (key == KEY_W)
-			game->px -= SIZE_OF_PIXEL;
-		if (key == KEY_S)
-			game->px += SIZE_OF_PIXEL;
-		if (key == KEY_A)
-			game->py -= SIZE_OF_PIXEL;
-		if (key == KEY_D)
-			game->py += SIZE_OF_PIXEL;
-		ft_put_pixel_to_window_by_size(game->px, game->py, 0x00FFFF00, game);
+			{ printf("W\n"); game->px += game->pdx; game->py += game->pdy; }
+		else if (key == KEY_S)
+			{ printf("S\n"); game->px -= game->pdx; game->py -= game->pdy; }
+		else if (key == KEY_A)
+			{ printf("A\n"); game->pa -= 0.1; if(game->pa <      0) {game->pa += 2 * PI;} game->pdx = cos(game->pa) * 5; game->pdy = sin(game->pa) * 5; }
+		else if (key == KEY_D)
+			{ printf("D\n"); game->pa += 0.1; if(game->pa > 2 * PI) {game->pa -= 2 * PI;} game->pdx = cos(game->pa) * 5; game->pdy = sin(game->pa) * 5; }
+		// if (key == KEY_W)
+		// 	game->px -= SIZE_OF_PIXEL;
+		// if (key == KEY_S)
+		// 	game->px += SIZE_OF_PIXEL;
+		// if (key == KEY_A)
+		// 	game->py -= SIZE_OF_PIXEL;
+		// if (key == KEY_D)
+		// 	game->py += SIZE_OF_PIXEL;
+
+		// if (ft_check_is_pixel_map(, game) == 1)
+		// {
+		// 	ft_put_pixel_to_window_by_size(game->px, game->py, 0x000000, game);
+		// 	ft_put_pixel_to_window_by_size(game->px, game->py, 0x000000, game);
+		// }
+		mlx_pixel_put(game->mlx, game->mlx_win, game->px, game->py, 0x00FFFF00); // for player one pixel after move;
+		mlx_pixel_put(game->mlx, game->mlx_win, game->pdx, game->pdy, 0x00FFFF00); // for player one pixel after move;
+		//ft_put_pixel_to_window_by_size(game->px, game->py, 0x00FFFF00, game);
 	}
 	//mlx_clear_window(game->mlx, game->mlx_win);
 	//ft_put_pixel_to_window_for_map(game);
@@ -103,6 +132,8 @@ void	ft_put_pixel_to_window_for_map(t_data *game)
 		{
 			if (game->splitted_str[map_y][map_x] == '1')
 				ft_put_pixel_to_window_by_size(x, y, 0x00FFFFFF, game);
+			else
+				ft_put_pixel_to_window_by_size(x, y, 0x00000000, game);
 			x += SIZE_OF_PIXEL;
 			map_x++;
 		}
@@ -131,7 +162,7 @@ void	ft_put_pixel_to_window_by_size(double x, double y, int color, t_data *game)
 	return ;
 }
 
-void	ft_check_if_pixel_map(t_data *game)
+void	ft_check_if_pixel_is_map(t_data *game)
 {
 
 	int	map_x;

@@ -5,15 +5,17 @@
 # include <fcntl.h> // open();
 # include <stdlib.h> // malloc(); free(); exit();
 # include <stdio.h> // perror();
+# include <math.h>
 # include <mlx.h>
 
+# define PI 3.1415926535
 # define SIZE_WIDTH_WINDOW_X 640
-# define SIZE_HEIGHT_WINDOW_Y 480
-# define SIZE_OF_PIXEL 40
-# define KEY_W 0
-# define KEY_S 2
-# define KEY_A 13
-# define KEY_D 1
+# define SIZE_HEIGHT_WINDOW_Y 320
+# define SIZE_OF_PIXEL 20
+# define KEY_W 13
+# define KEY_S 1
+# define KEY_A 0
+# define KEY_D 2
 # define BUFFER_SIZE_FOR_GNL 100
 
 typedef struct s_point
@@ -31,6 +33,9 @@ typedef struct s_data
 	int		xpm_size;
 double px;
 double py;
+double pdx;
+double pdy;
+double pa;
 	//int		x_of_window;
 	//int		y_of_window;
 	void	*img_of_wall;
