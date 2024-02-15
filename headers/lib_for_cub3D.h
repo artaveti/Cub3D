@@ -9,9 +9,11 @@
 # include <mlx.h>
 
 # define PI 3.1415926535
+# define P2 PI/2
+# define P3 3*PI/2
 # define SIZE_WIDTH_WINDOW_X 640
-# define SIZE_HEIGHT_WINDOW_Y 320
-# define SIZE_OF_PIXEL 20
+# define SIZE_HEIGHT_WINDOW_Y 320  //480
+# define SIZE_OF_PIXEL 40
 # define KEY_W 13
 # define KEY_S 1
 # define KEY_A 0
@@ -31,11 +33,32 @@ typedef struct s_data
 	char	*joined_str;
 	char	**splitted_str_1;
 	int		xpm_size;
+
+
+int mapX;
+int mapY;
+int mapS;
+int *p_map;
+
 double px;
 double py;
 double pdx;
 double pdy;
 double pa;
+
+int r;
+int mx;
+int my;
+int mp;
+int dof;
+
+double rx;
+double ry;
+double ra;
+double xo;
+double yo;
+double aTan;
+double nTan;
 	//int		x_of_window;
 	//int		y_of_window;
 	void	*img_of_wall;
