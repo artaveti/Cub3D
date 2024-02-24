@@ -5,7 +5,7 @@ void	ft_put_error(char *string);
 char	*ft_joined_lines_from_gnl(char *argv[]);
 int		ft_y_for_mlxwin_size(char	**splitted_str);
 
-void	ft_put_movement_count(t_data *game)
+/*void	ft_put_movement_count(t_data *game)
 {
 	char	*tmp;
 
@@ -22,7 +22,7 @@ void	ft_put_movement_count(t_data *game)
 	mlx_string_put(game->mlx, game->mlx_win, 80, 0, 0x000000, tmp);
 	free(tmp);
 	return ;
-}
+}*/
 
 void	ft_check_is_file_exist(int fd)
 {

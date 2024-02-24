@@ -1,6 +1,6 @@
 #include "lib_for_cub3D.h"
 
-void	ft_check_is_coord_exit_red(t_data *game)
+/*void	ft_check_is_coord_exit_red(t_data *game)
 {
 	int	x;
 	int	y;
@@ -27,9 +27,9 @@ void	ft_check_is_coord_exit_red(t_data *game)
 				y * game->xpm_size);
 	}
 	return ;
-}
+}*/
 
-void	ft_check_is_coord_exit_green(t_data *game)
+/*void	ft_check_is_coord_exit_green(t_data *game)
 {
 	int	x;
 	int	y;
@@ -56,4 +56,4 @@ void	ft_check_is_coord_exit_green(t_data *game)
 				y * game->xpm_size);
 	}
 	return ;
-}
+}*/

@@ -1,6 +1,6 @@
 #include "lib_for_cub3D.h"
 
-void	ft_put_image_to_animation(int i, int y, int x, t_data *game)
+/*void	ft_put_image_to_animation(int i, int y, int x, t_data *game)
 {
 	if (game->splitted_str[y][x] == 'W')
 	{
@@ -22,7 +22,7 @@ void	ft_put_image_to_animation(int i, int y, int x, t_data *game)
 				y * game->xpm_size);
 	}
 	return ;
-}
+}*/
 
 int	ft_put_animation(t_data *game)
 {
@@ -38,7 +38,7 @@ int	ft_put_animation(t_data *game)
 		x = 0;
 		while (game->splitted_str[y][x] != '\0')
 		{
-			ft_put_image_to_animation(i, y, x, game);
+			//ft_put_image_to_animation(i, y, x, game);
 			x++;
 		}
 		y++;

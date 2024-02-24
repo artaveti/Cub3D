@@ -2,7 +2,7 @@
 
 void	ft_put_image_to_window_coord_count(int y, int x, t_data *game);
 
-void	ft_put_image_to_window(t_data *game)
+/*void	ft_put_image_to_window(t_data *game)
 {
 	int	y;
 	int	x;
@@ -29,9 +29,9 @@ void	ft_put_image_to_window(t_data *game)
 		}
 	}
 	return ;
-}
+}*/
 
-void	ft_put_image_to_window_coord_count(int y, int x, t_data *game)
+/*void	ft_put_image_to_window_coord_count(int y, int x, t_data *game)
 {
 	if (game->splitted_str[y][x] == 'C')
 	{
@@ -54,4 +54,4 @@ void	ft_put_image_to_window_coord_count(int y, int x, t_data *game)
 		game->player_coord_y = y;
 	}
 	return ;
-}
+}*/

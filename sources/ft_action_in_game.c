@@ -5,7 +5,7 @@ void	ft_check_is_coord_collectible(t_data *game);
 void	ft_put_string_of_loose(t_data *game);
 void	ft_put_string_of_win(t_data *game);
 
-void	ft_action_in_game(int key, t_data *game)
+/*void	ft_action_in_game(int key, t_data *game)
 {
 	mlx_put_image_to_window(game->mlx, game->mlx_win,
 		game->img_of_background,
@@ -30,9 +30,9 @@ void	ft_action_in_game(int key, t_data *game)
 	ft_put_string_of_loose(game);
 	ft_put_string_of_win(game);
 	return ;
-}
+}*/
 
-void	ft_check_is_coord_wall(int key, t_data *game)
+/*void	ft_check_is_coord_wall(int key, t_data *game)
 {
 	if (game->splitted_str[game->player_coord_y][game->player_coord_x] == '1')
 	{
@@ -49,9 +49,9 @@ void	ft_check_is_coord_wall(int key, t_data *game)
 	else
 		ft_put_movement_count(game);
 	return ;
-}
+}*/
 
-void	ft_check_is_coord_collectible(t_data *game)
+/*void	ft_check_is_coord_collectible(t_data *game)
 {
 	if (game->splitted_str[game->player_coord_y][game->player_coord_x] == 'C')
 	{
@@ -64,9 +64,9 @@ void	ft_check_is_coord_collectible(t_data *game)
 			game->exit_coord_x * game->xpm_size,
 			game->exit_coord_y * game->xpm_size);
 	return ;
-}
+}*/
 
-void	ft_put_string_of_loose(t_data *game)
+/*void	ft_put_string_of_loose(t_data *game)
 {
 	int	x;
 	int	y;
@@ -81,9 +81,9 @@ void	ft_put_string_of_loose(t_data *game)
 		mlx_string_put(game->mlx, game->mlx_win, 160, 30, 0x000000, "YOU LOSE");
 		mlx_key_hook (game->mlx_win, &ft_keypress_only_esc, game);
 	}
-}
+}*/
 
-void	ft_put_string_of_win(t_data *game)
+/*void	ft_put_string_of_win(t_data *game)
 {
 	int	x;
 	int	y;
@@ -100,4 +100,4 @@ void	ft_put_string_of_win(t_data *game)
 		mlx_key_hook (game->mlx_win, &ft_keypress_only_esc, game);
 	}
 	return ;
-}
+}*/

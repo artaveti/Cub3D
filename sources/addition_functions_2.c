@@ -4,8 +4,8 @@ int	ft_keypress_only_esc(int key, t_data	*game);
 
 int	ft_keypress(int key, t_data *game)
 {
-	if (key == 13 || key == 1 || key == 0 || key == 2)
-		ft_action_in_game(key, game);
+	/*if (key == 13 || key == 1 || key == 0 || key == 2)
+		ft_action_in_game(key, game);*/
 	ft_keypress_only_esc(key, game);
 	return (0);
 }
