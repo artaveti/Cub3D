@@ -9,8 +9,11 @@
 # include <mlx.h>
 
 # define PI 3.141592 //6535
-# define DEGREE_90 PI/2
-# define DEGREE_270 3*PI/2
+# define DEGREE_0 0
+# define DEGREE_90 PI / 2
+# define DEGREE_180 PI
+# define DEGREE_270 3 * PI / 2
+# define DEGREE_360 2 * PI
 # define SIZE_WIDTH_WINDOW_X 640
 # define SIZE_HEIGHT_WINDOW_Y 480
 # define KEY_W 13
