@@ -4,7 +4,7 @@ void ft_draw_squares(t_data	*game, int width, int height);
 int ft_player_move(int key, t_data	*game);
 void ft_create_rays(t_data	*game);
 void ft_create_rays_check_horizontal(t_data	*game);
-//int	ft_keypress_only_esc(int key, t_data	*game);
+int	ft_keypress_only_esc(int key, t_data	*game);
 //int	ft_close_with_cross(t_data	*game)
 
 //stugel zroneri bajanelu depqery tang-i ev cotang-i hashvarki jamanak
@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 
 t_data	game;
 
+printf("%f\n", (tan(1)));
 
 int map_width;
 int map_height;
@@ -37,14 +38,21 @@ float ray_direction_y;
 		exit(EXIT_FAILURE);
 	
 ft_draw_squares(&game, SIZE_WIDTH_WINDOW_X, SIZE_HEIGHT_WINDOW_Y);
+/*int i;
+i = 0;
+while(i < 5)
+{
+	printf("%s\n", game.splitted_str[i]);
+	i++;
+}*/
 	//map_width = ft_strlen(game.splitted_str_1[0]);
 	//map_height = game.splitted_str_1; // must count lines quant
 	
 	map_width = 4;
 	map_height = 6;
 	
-	game.player_coord_x = 100;
-	game.player_coord_y = 100;
+	game.player_coord_x = 10;
+	game.player_coord_y = 10;
 	game.angle = DEGREE_90 * 0.3;
 	game.direction_x = cos(game.angle); //x
 	game.direction_y = sin(game.angle); //y
@@ -77,6 +85,8 @@ int ft_player_move(int key, t_data	*game)
 	float degree_for_step_left_or_right;
 	float ray_direction_x;
 	float ray_direction_y;
+	//int x_for_check;
+	//int y_for_check;
 
 	if (key == KEY_W || key == KEY_S || key == KEY_A || key == KEY_D
 		|| key == ARROW_LEFT || key == ARROW_RIGHT)
@@ -93,12 +103,52 @@ int ft_player_move(int key, t_data	*game)
 			printf("W\n");
 			game->player_coord_x += game->direction_x * 10;
 			game->player_coord_y -= game->direction_y * 10;
+			if(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+			{
+				game->player_coord_x -= game->direction_x * 10;
+				game->player_coord_y += game->direction_y * 10;
+				while(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] != '1')
+				{
+					printf("FLOAT:%f  FLOAT:%f \n", game->player_coord_y, game->player_coord_x);
+					printf("INT:%d  INT:%d \n", (int)game->player_coord_y, (int)game->player_coord_x);
+					printf("INT/10: %d  INT/10: %d \n", (int)game->player_coord_y / 10, (int)game->player_coord_x /10);
+					printf("Counter\n");
+					game->player_coord_x += game->direction_x;
+					game->player_coord_y -= game->direction_y;
+					if (game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+					{
+						game->player_coord_x -= game->direction_x;
+						game->player_coord_y += game->direction_y;
+						break ;
+					}
+				}
+			}
 		}
 		else if (key == KEY_S)
 		{ 
 			printf("S\n");
 			game->player_coord_x -= game->direction_x * 10;
 			game->player_coord_y += game->direction_y * 10;
+			if(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+			{
+				game->player_coord_x += game->direction_x * 10;
+				game->player_coord_y -= game->direction_y * 10;
+				while(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] != '1')
+				{
+					printf("FLOAT:%f  FLOAT:%f \n", game->player_coord_y, game->player_coord_x);
+					printf("INT:%d  INT:%d \n", (int)game->player_coord_y, (int)game->player_coord_x);
+					printf("INT/10: %d  INT/10: %d \n", (int)game->player_coord_y / 10, (int)game->player_coord_x /10);
+					printf("Counter\n");
+					game->player_coord_x -= game->direction_x;
+					game->player_coord_y += game->direction_y;
+					if (game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+					{
+						game->player_coord_x += game->direction_x;
+						game->player_coord_y -= game->direction_y;
+						break ;
+					}
+				}
+			}
 		}
 		else if (key == KEY_A)
 		{
@@ -110,6 +160,26 @@ int ft_player_move(int key, t_data	*game)
 			}
 			game->player_coord_x += cos(degree_for_step_left_or_right) * 10;
 			game->player_coord_y -= sin(degree_for_step_left_or_right) * 10;
+			if(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+			{
+				game->player_coord_x -= cos(degree_for_step_left_or_right) * 10;
+				game->player_coord_y += sin(degree_for_step_left_or_right) * 10;
+				while(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] != '1')
+				{
+					printf("FLOAT:%f  FLOAT:%f \n", game->player_coord_y, game->player_coord_x);
+					printf("INT:%d  INT:%d \n", (int)game->player_coord_y, (int)game->player_coord_x);
+					printf("INT/10: %d  INT/10: %d \n", (int)game->player_coord_y / 10, (int)game->player_coord_x /10);
+					printf("Counter\n");
+					game->player_coord_x += cos(degree_for_step_left_or_right);
+					game->player_coord_y -= sin(degree_for_step_left_or_right);
+					if (game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+					{
+						game->player_coord_x -= cos(degree_for_step_left_or_right);
+						game->player_coord_y += sin(degree_for_step_left_or_right);
+						break ;
+					}
+				}
+			}
 		}
 		else if (key == KEY_D)
 		{ 
@@ -121,6 +191,26 @@ int ft_player_move(int key, t_data	*game)
 			}
 			game->player_coord_x += cos(degree_for_step_left_or_right) * 10;
 			game->player_coord_y -= sin(degree_for_step_left_or_right) * 10;
+			if(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+			{
+				game->player_coord_x -= cos(degree_for_step_left_or_right) * 10;
+				game->player_coord_y += sin(degree_for_step_left_or_right) * 10;
+				while(game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] != '1')
+				{
+					printf("FLOAT:%f  FLOAT:%f \n", game->player_coord_y, game->player_coord_x);
+					printf("INT:%d  INT:%d \n", (int)game->player_coord_y, (int)game->player_coord_x);
+					printf("INT/10: %d  INT/10: %d \n", (int)game->player_coord_y / 10, (int)game->player_coord_x /10);
+					printf("Counter\n");
+					game->player_coord_x += cos(degree_for_step_left_or_right);
+					game->player_coord_y -= sin(degree_for_step_left_or_right);
+					if (game->splitted_str[(int)game->player_coord_y / 10][(int)game->player_coord_x / 10] == '1')
+					{
+						game->player_coord_x -= cos(degree_for_step_left_or_right);
+						game->player_coord_y += sin(degree_for_step_left_or_right);
+						break ;
+					}
+				}
+			}
 		}
 		else if (key == ARROW_LEFT)
 		{ 
@@ -154,7 +244,7 @@ int ft_player_move(int key, t_data	*game)
 	}
 	ft_create_rays(game);
 	ft_create_rays_check_horizontal(game);
-	//ft_keypress_only_esc(key, game);
+	ft_keypress_only_esc(key, game);
 	return (0);
 }
 
@@ -264,17 +354,17 @@ void ft_draw_squares(t_data	*game, int width, int height)
 	return ;
 }
 
-/*int	ft_keypress_only_esc(int key, t_data	*game)
+int	ft_keypress_only_esc(int key, t_data	*game)
 {
 	if (key == KEY_ESC)
 	{
-		//mlx_destroy_window(game->mlx, game->mlx_win);
+		mlx_destroy_window(game->mlx, game->mlx_win);
 		free(game->mlx);
 		//system("leaks cub3D");
 		exit(EXIT_SUCCESS);
 	}
 	return (0);
-}*/
+}
 
 /*int	ft_close_with_cross(t_data	*game)
 {

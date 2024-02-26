@@ -1,6 +1,6 @@
 #include "lib_for_cub3D.h"
 
-int	ft_keypress_only_esc(int key, t_data	*game);
+//int	ft_keypress_only_esc(int key, t_data	*game);
 
 int	ft_keypress(int key, t_data *game)
 {
@@ -10,7 +10,7 @@ int	ft_keypress(int key, t_data *game)
 	return (0);
 }
 
-int	ft_keypress_only_esc(int key, t_data	*game)
+/*int	ft_keypress_only_esc(int key, t_data	*game)
 {
 	if (key == 53)
 	{
@@ -20,7 +20,7 @@ int	ft_keypress_only_esc(int key, t_data	*game)
 		exit(EXIT_SUCCESS);
 	}
 	return (0);
-}
+}*/
 
 int	ft_close_with_cross(t_data	*game)
 {
