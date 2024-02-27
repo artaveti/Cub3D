@@ -14,6 +14,7 @@
 # define DEGREE_180 PI
 # define DEGREE_270 3 * PI / 2
 # define DEGREE_360 2 * PI
+# define ONE_DEGREE 0.017453 //3
 # define SIZE_WIDTH_WINDOW_X 640
 # define SIZE_HEIGHT_WINDOW_Y 480
 # define KEY_W 13
@@ -23,6 +24,10 @@
 # define ARROW_LEFT 123
 # define ARROW_RIGHT 124
 # define KEY_ESC 53
+# define NO 10
+# define SO 20
+# define WE 30
+# define EA 40
 # define BUFFER_SIZE_FOR_GNL 100
 
 typedef struct s_point
@@ -42,6 +47,7 @@ typedef struct s_data
 	float   angle;
 	float	direction_x;
 	float	direction_y;
+	int 	wall_side;
 	int		xpm_size;
 	void 	*img_wall;
 	char	**splitted_str;

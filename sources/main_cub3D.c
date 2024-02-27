@@ -3,7 +3,8 @@
 void ft_draw_squares(t_data	*game, int width, int height);
 int ft_player_move(int key, t_data	*game);
 void ft_create_rays(t_data	*game);
-void ft_create_rays_check_horizontal(t_data	*game);
+float ft_create_rays_check_vertical(t_data	*game);
+float ft_create_rays_check_horizontal(t_data	*game);
 int	ft_keypress_only_esc(int key, t_data	*game);
 //int	ft_close_with_cross(t_data	*game)
 
@@ -17,6 +18,10 @@ int	main(int argc, char **argv)
 // printf("DEGREE_180:%f\n", DEGREE_180);
 // printf("DEGREE_270:%f\n", DEGREE_270);
 // printf("DEGREE_360:%f\n", DEGREE_360);
+// printf("DEGREE_360: %d\n", ONE_DEGREE);
+// printf("SQRT: %f\n", powf(14 - 20, 2));
+// printf("SQRT: %f\n", powf(18 - 16, 2));
+// printf("SQRT: %f\n", sqrtf(powf(14 - 20, 2) + powf(18 - 16, 2)));
 
 t_data	game;
 
@@ -68,7 +73,7 @@ while(i < 5)
 		printf("Enter direction key: \n");
 		scanf("%d", &key);
 		ft_player_move(key, &game);
-		//ft_create_rays(&game);
+		//ft_create_rays_check_vertical(&game);
 		i++;
 	}*/
 	mlx_key_hook (game.mlx_win, &ft_player_move, &game); // player move
@@ -125,7 +130,7 @@ int ft_player_move(int key, t_data	*game)
 			}
 		}
 		else if (key == KEY_S)
-		{ 
+		{
 			printf("S\n");
 			game->player_coord_x -= game->direction_x * 10;
 			game->player_coord_y += game->direction_y * 10;
@@ -243,22 +248,33 @@ int ft_player_move(int key, t_data	*game)
 		printf("player_coord_x:%f\nplayer_coord_y:%f\n\n",game->player_coord_x, game->player_coord_y);
 	}
 	ft_create_rays(game);
-	ft_create_rays_check_horizontal(game);
 	ft_keypress_only_esc(key, game);
 	return (0);
 }
 
 void ft_create_rays(t_data	*game)
 {
-	float ray_start_x;
-	float ray_start_y;
+	float vertical_ray;
+	float horizontal_ray;
+	//int wall_side;
+	vertical_ray = ft_create_rays_check_vertical(game);
+	horizontal_ray = ft_create_rays_check_horizontal(game);
+	//game->wall_side = ;
+	return ;
+}
+
+float ft_create_rays_check_vertical(t_data	*game)
+{
+	//float ray_start_x;
+	//float ray_start_y;
 	static float ray_end_x;
 	static float ray_end_y;
 	float distance_x;
 	int remainder;
+	float ray_length;
 	//float distance_y;
-	ray_start_x = game->player_coord_x;
-	ray_start_y = game->player_coord_y;
+	//ray_start_x = game->player_coord_x;
+	//ray_start_y = game->player_coord_y;
 	mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00000000);
 	//ray_end_x = 0;
 	//ray_end_y = 0;
@@ -272,6 +288,7 @@ void ft_create_rays(t_data	*game)
 		ray_end_y = game->player_coord_y - tan(game->angle) * distance_x;
 		//mlx_pixel_put(game->mlx, game->mlx_win, ray_start_x, ray_start_y, 0x00FFFFFF); // for player one pixel after move;
 		mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for player one pixel after move;
+		game->wall_side = WE;
 	}
 	else
 	{
@@ -282,22 +299,27 @@ void ft_create_rays(t_data	*game)
 		ray_end_y = game->player_coord_y - tan(game->angle) * distance_x;
 		//mlx_pixel_put(game->mlx, game->mlx_win, ray_start_x, ray_start_y, 0x00FFFFFF); // for player one pixel after move;
 		mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for player one pixel after move;
+		game->wall_side = EA;
 	}
+	ray_length = sqrt(pow(ray_end_x - game->player_coord_x, 2) + pow(ray_end_y - game->player_coord_y, 2));
+	// printf("RAY_END_X: %f  RAY_START_X: %f\n", ray_end_x, game->player_coord_x);
+	// printf("RAY_END_Y: %f  RAY_START_Y: %f\n", ray_end_y, game->player_coord_y);
+	// printf("RAY_LENGTH: %f\n", ray_length);
 	return ;
 }
 
-void ft_create_rays_check_horizontal(t_data	*game)
+float ft_create_rays_check_horizontal(t_data	*game)
 {
-	float ray_start_x;
-	float ray_start_y;
+	//float ray_start_x;
+	//float ray_start_y;
 	static float ray_end_x;
 	static float ray_end_y;
 	//float distance_x;
 	float distance_y;
 	int remainder;
 	//float distance_y;
-	ray_start_x = game->player_coord_x;
-	ray_start_y = game->player_coord_y;
+	//ray_start_x = game->player_coord_x;
+	//ray_start_y = game->player_coord_y;
 	mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00000000);
 	//ray_end_x = 0;
 	//ray_end_y = 0;
@@ -311,6 +333,7 @@ void ft_create_rays_check_horizontal(t_data	*game)
 		ray_end_x = game->player_coord_x + 1 / tan(game->angle) * distance_y;
 		//mlx_pixel_put(game->mlx, game->mlx_win, ray_start_x, ray_start_y, 0x00FFFFFF); // for player one pixel after move;
 		mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for player one pixel after move;
+		game->wall_side = SO;
 	}
 	else
 	{
@@ -321,6 +344,7 @@ void ft_create_rays_check_horizontal(t_data	*game)
 		ray_end_x = game->player_coord_x + 1 / tan(game->angle) * distance_y;
 		//mlx_pixel_put(game->mlx, game->mlx_win, ray_start_x, ray_start_y, 0x00FFFFFF); // for player one pixel after move;
 		mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for player one pixel after move;
+		game->wall_side = NO;
 	}
 	return ;
 }
