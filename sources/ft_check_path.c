@@ -1,6 +1,6 @@
 #include "lib_for_cub3D.h"
 
-void	ft_position_coordinates(char **splitted_str, int *x, int *y);
+/*void	ft_position_coordinates(char **splitted_str, int *x, int *y);
 void	flood_fill(char **tab, t_point size, t_point begin);
 void	fill(char **tab, t_point size, t_point cur, char to_fill);
 void	ft_check_reach_c_e(char **splitted_str);
@@ -93,4 +93,4 @@ void	ft_check_reach_c_e(char **splitted_str)
 		}
 	}
 	return ;
-}
+}*/

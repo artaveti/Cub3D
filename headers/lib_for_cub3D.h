@@ -8,15 +8,22 @@
 # include <math.h>
 # include <mlx.h>
 
-# define PI 3.141592 //6535
-# define DEGREE_0 0
-# define DEGREE_90 PI / 2
-# define DEGREE_180 PI
-# define DEGREE_270 3 * PI / 2
-# define DEGREE_360 2 * PI
-# define ONE_DEGREE 0.017453 //3
+# define PI 3.141593
+# define DEGREE_0 0 //0�
+# define DEGREE_30 PI / 6 //30.000013�
+# define DEGREE_45 PI / 4 //44.999991�
+# define DEGREE_90 PI / 2 //89.999981
+# define DEGREE_180 PI // 180.00002� 179.999963�(3.141592)
+# define DEGREE_270 3 * PI / 2 // 270.000001� 269.999944�(3.141592)
+# define DEGREE_360 2 * PI //360.00004� 359.999925�(3.141592)
+# define ONE_DEGREE_TO_RADIAN 0.017453
+# define ONE_RADIAN_TO_DEGREE 57.29578
+# define ONE_THOUSANDTH_OF_ONE_DEGREE 0.000017
 # define SIZE_WIDTH_WINDOW_X 640
 # define SIZE_HEIGHT_WINDOW_Y 480
+# define FOV_DEGREE 60
+# define FOV_RADIAN 1.047198
+# define ONE_STEP_IN_RADIAN_FOR_FOV FOV_RADIAN / SIZE_WIDTH_WINDOW_X
 # define KEY_W 13
 # define KEY_S 1
 # define KEY_A 0
@@ -28,13 +35,17 @@
 # define SO 20
 # define WE 30
 # define EA 40
+# define NE 50
+# define NW 60
+# define SW 70
+# define SE 80
 # define BUFFER_SIZE_FOR_GNL 100
 
-typedef struct s_point
+typedef struct s_ray_and_wall
 {
-	int			x;
-	int			y;
-}	t_point;
+	float	ray_length;
+	int		wall_side;
+}	t_ray_and_wall;
 
 typedef struct s_data
 {
@@ -42,12 +53,14 @@ typedef struct s_data
 	void	*mlx_win;
 	char	*joined_str;
 	char	**splitted_str_1;
+	int 	map_width;
+	int		map_height;
 	float	player_coord_x;
 	float	player_coord_y;
-	float   angle;
+	float   direction_angle;
 	float	direction_x;
 	float	direction_y;
-	int 	wall_side;
+	t_ray_and_wall *rays_and_walls;
 	int		xpm_size;
 	void 	*img_wall;
 	char	**splitted_str;
@@ -84,5 +97,10 @@ void	ft_put_error(char *string);
 int		ft_keypress_only_esc(int key, t_data *game);
 int		ft_keypress(int key, t_data *game);
 int		ft_close_with_cross(t_data *game);
+
+
+void ft_create_rays(t_data	*game);
+float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical);
+float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal);
 
 #endif

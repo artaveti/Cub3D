@@ -14,7 +14,7 @@ void	ft_check_map(char *argv[], t_data *game)
 	ft_check_line_length(game->splitted_str_1);
 	ft_check_characters(game->splitted_str_1);
 	ft_check_quantity_of_c_e_p(game->joined_str);
-	ft_check_path(game->splitted_str_1);
+	//ft_check_path(game->splitted_str_1);
 	game->splitted_str = ft_split(game->joined_str, '\n');
 	//game->x_of_window = ft_strlen(game->splitted_str_1[0]);
 	//game->y_of_window = ft_y_for_mlxwin_size(game->splitted_str_1);
