@@ -37,8 +37,8 @@ ft_draw_squares(&game, SIZE_WIDTH_WINDOW_X, SIZE_HEIGHT_WINDOW_Y);
 	game.player_coord_y = 25;
 	
 	game.direction_angle = DEGREE_90 * 0.3; // NO, SO, WE, EA
-	game.direction_x = cos(game.direction_angle); //x
-	game.direction_y = sin(game.direction_angle); //y
+	// game.direction_x = cos(game.direction_angle); //x
+	// game.direction_y = sin(game.direction_angle); //y
 	
 	mlx_pixel_put(game.mlx, game.mlx_win, game.player_coord_x, game.player_coord_y, 0x00FFFF00); // for player start coordinates;
 	

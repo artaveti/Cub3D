@@ -23,7 +23,7 @@ float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_ve
 		if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x > (float)(game->map_width * 10 - 10))
 		{
 			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			return game->map_height;
+			return game->map_width;
 		}
 		else
 		{
@@ -35,7 +35,7 @@ float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_ve
 				if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x > (float)(game->map_width * 10 - 10))
 				{
 					//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-					return game->map_height;
+					return game->map_width;
 				}
 			}
 		}
@@ -48,27 +48,27 @@ float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_ve
 		ray_end_x = (int)game->player_coord_x - remainder - 1;
 		distance_x = game->player_coord_x - ray_end_x;
 		ray_end_y = game->player_coord_y + tan(angle_of_ray) * distance_x;
-		if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)0)
+		if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)9)
 		{
 			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			return game->map_height;
+			return game->map_width;
 		}
 		while(game->splitted_str[(int)ray_end_y / 10][(int)ray_end_x / 10] != '1')
 		{
 			ray_end_x -= 10;
 			distance_x = game->player_coord_x - ray_end_x;
 			ray_end_y = game->player_coord_y + tan(angle_of_ray) * distance_x;
-			if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)0)
+			if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)9)
 			{
 				//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-				return game->map_height;
+				return game->map_width;
 			}
 		}
 	}
 	else
 	{
 		*wall_side_vertical = EA;
-		return game->map_height;
+		return game->map_width;
 	}
 	ray_length = sqrt(pow(ray_end_x - game->player_coord_x, 2) + pow(ray_end_y - game->player_coord_y, 2));
 	// printf("RAY_END_X: %f  RAY_END_Y: %f\n", ray_end_x, ray_end_yx);

@@ -24,6 +24,7 @@
 # define FOV_DEGREE 60
 # define FOV_RADIAN 1.047198
 # define ONE_STEP_IN_RADIAN_FOR_FOV FOV_RADIAN / SIZE_WIDTH_WINDOW_X
+# define ONE_STEP_FOR_MOVE 10
 # define KEY_W 13
 # define KEY_S 1
 # define KEY_A 0
@@ -99,8 +100,9 @@ int		ft_keypress(int key, t_data *game);
 int		ft_close_with_cross(t_data *game);
 
 
-void ft_create_rays(t_data	*game);
-float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical);
-float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal);
+void	ft_move_by_degree( t_data	*game, float	direction_angle, int one_step, int *player_has_moved);
+void 	ft_create_rays(t_data	*game);
+float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical);
+float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal);
 
 #endif

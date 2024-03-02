@@ -3,10 +3,10 @@
 void ft_create_rays(t_data	*game)
 {
 	float vertical_ray;
-	//float horizontal_ray;
+	float horizontal_ray;
 	float angle_of_ray;
 	int wall_side_vertical;
-	//int wall_side_horizontal;
+	int wall_side_horizontal;
 	int i;
 	
 	angle_of_ray = game->direction_angle + DEGREE_30;
@@ -21,17 +21,17 @@ void ft_create_rays(t_data	*game)
 	while(i < SIZE_WIDTH_WINDOW_X)
 	{	
 		vertical_ray = ft_create_ray_vertical(game, angle_of_ray, &wall_side_vertical);
-		//horizontal_ray = ft_create_ray_horizontal(game, angle_of_ray, &wall_side_horizontal);
-		/*if (vertical_ray < horizontal_ray)
+		horizontal_ray = ft_create_ray_horizontal(game, angle_of_ray, &wall_side_horizontal);
+		if (vertical_ray < horizontal_ray)
 		{
-			game->rays_and_walls[i][0] = vertical_ray;
-			game->rays_and_walls[i][1] = wall_side_vertical;
+			game->rays_and_walls[i].ray_length = vertical_ray;
+			game->rays_and_walls[i].wall_side = wall_side_vertical;
 		}
 		else
 		{
-			game->rays_and_walls[i][0] = horizontal_ray;
-			game->rays_and_walls[i][1] = wall_side_horizontal;
-		}*/
+			game->rays_and_walls[i].ray_length = horizontal_ray;
+			game->rays_and_walls[i].wall_side = wall_side_horizontal;
+		}
 		angle_of_ray -= ONE_STEP_IN_RADIAN_FOR_FOV;
 		if(angle_of_ray < 0)
 		{

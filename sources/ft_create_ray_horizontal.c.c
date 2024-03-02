@@ -17,16 +17,16 @@ float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_
 	{
 		//printf("MORE THAN 0 AND LESS THAN 180\n");
 		*wall_side_horizontal = SO;
-		ray_end_y = (int)game->player_coord_y - remainder;
+		ray_end_y = (int)game->player_coord_y - remainder - 1;
 		distance_y = game->player_coord_y - ray_end_y;
 		if(angle_of_ray > DEGREE_90 && angle_of_ray < DEGREE_90 + ONE_THOUSANDTH_OF_ONE_DEGREE)
 			ray_end_x = game->player_coord_x;
 		else
 			ray_end_x = game->player_coord_x + 1 / tan(angle_of_ray) * distance_y;
-		if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 20))
+		if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 10) || ray_end_y < (float)9)
 		{
-			mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			return game->map_width;
+			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
+			return game->map_height;
 		}
 		while(game->splitted_str[(int)ray_end_y / 10][(int)ray_end_x / 10] != '1')
 		{
@@ -36,10 +36,10 @@ float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_
 				ray_end_x = game->player_coord_x;
 			else
 				ray_end_x = game->player_coord_x + 1 / tan(angle_of_ray) * distance_y;
-			if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 20))
+			if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 10) || ray_end_y < (float)9)
 			{
-				mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-				return game->map_width;
+				//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
+				return game->map_height;
 			}
 		}
 	}
@@ -54,32 +54,32 @@ float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_
 			&& angle_of_ray < DEGREE_270)
 			ray_end_x = game->player_coord_x;
 		else
-			ray_end_x = game->player_coord_x + 1 / tan(angle_of_ray) * distance_y;
-		if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 20))
+			ray_end_x = game->player_coord_x - 1 / tan(angle_of_ray) * distance_y;
+		if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 10) || ray_end_y > (float)(game->map_height * 10 - 10))
 		{
-			mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			return game->map_width;
+			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
+			return game->map_height;
 		}
 		while(game->splitted_str[(int)ray_end_y / 10][(int)ray_end_x / 10] != '1')
 		{
 			ray_end_y += 10;
-			distance_y = game->player_coord_y - ray_end_y;
+			distance_y = ray_end_y - game->player_coord_y;
 			if(angle_of_ray > DEGREE_270 - ONE_THOUSANDTH_OF_ONE_DEGREE
 				&& angle_of_ray < DEGREE_270)
 				ray_end_x = game->player_coord_x;
 			else
-				ray_end_x = game->player_coord_x + 1 / tan(angle_of_ray) * distance_y;
-			if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 20))
+				ray_end_x = game->player_coord_x - 1 / tan(angle_of_ray) * distance_y;
+			if (ray_end_x < (float)10 || ray_end_x > (float)(game->map_width * 10 - 10) || ray_end_y > (float)(game->map_height * 10 - 10))
 			{
-				mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-				return game->map_width;
+				//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
+				return game->map_height;
 			}
 		}
 	}
 	else
 	{
 		*wall_side_horizontal = NO;
-		return game->map_width;
+		return game->map_height;
 	}
 	ray_length = sqrt(pow(ray_end_x - game->player_coord_x, 2) + pow(ray_end_y - game->player_coord_y, 2));
 	// printf("RAY_END_X: %f  RAY_END_Y: %f\n", ray_end_x, ray_end_yx);
