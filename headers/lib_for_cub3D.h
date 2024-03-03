@@ -46,6 +46,7 @@ typedef struct s_ray_and_wall
 {
 	float	ray_length;
 	int		wall_side;
+	int		point_of_texture;
 }	t_ray_and_wall;
 
 typedef struct s_data
@@ -56,6 +57,7 @@ typedef struct s_data
 	char	**splitted_str_1;
 	int 	map_width;
 	int		map_height;
+	int 	ray_length_max;
 	float	player_coord_x;
 	float	player_coord_y;
 	float   direction_angle;
@@ -94,15 +96,16 @@ char	*ft_joined_lines_from_gnl(char *argv[]);
 void	ft_put_error(char *string);
 //int		ft_y_for_mlxwin_size(char **splitted_str);
 //void	ft_put_movement_count(t_data *game);
-//addition2
-int		ft_keypress_only_esc(int key, t_data *game);
+
 int		ft_keypress(int key, t_data *game);
+int		ft_keypress_only_esc(int key, t_data *game);
 int		ft_close_with_cross(t_data *game);
-
-
+void	ft_change_player_coord(int key, t_data	*game);
+void	ft_change_direction_angle(int key, t_data	*game);
 void	ft_move_by_degree( t_data	*game, float	direction_angle, int one_step, int *player_has_moved);
+void	ft_move_for_sliding(t_data	*game, float   direction_angle, int *player_has_moved);
 void 	ft_create_rays(t_data	*game);
-float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical);
-float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal);
+float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, int *point_of_texture);
+float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal, int *point_of_texture);
 
 #endif
