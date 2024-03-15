@@ -1,86 +1,113 @@
 #include "lib_for_cub3D.h"
 
-float ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, int *point_of_texture)
+void	ft_count_raylength_less_90_more_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray);
+void	ft_count_raylength_more_90_less_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray);
+
+float	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, float *point_of_texture)
 {
-	float ray_end_x;
-	float ray_end_y;
-	float distance_x;
-	int remainder;
-	float ray_length;
+	t_ray_creat_info ray_creat_info;
 	
-	ray_end_x = 0;
-	ray_end_y = 0;
-	//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-	//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00606060); // for ray_end clear;
-	remainder = (int)game->player_coord_x % 10;
+	*point_of_texture = 0;
+	ray_creat_info.ray_length = 0;
+	ray_creat_info.ray_end_x = 0;
+	ray_creat_info.ray_end_y = 0;
+	ray_creat_info.remainder = (int)game->player_coord_x % 10;
 	if(angle_of_ray < DEGREE_90 || angle_of_ray > DEGREE_270)
 	{
-		//printf("LESS THAN 90 AND MORE THAN 270\n");
 		*wall_side_vertical = WE;
-		ray_end_x = (int)game->player_coord_x - remainder + 10;
-		distance_x = ray_end_x - game->player_coord_x;
-		ray_end_y = game->player_coord_y - tan(angle_of_ray) * distance_x;
-		if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x > (float)(game->map_width * 10 - 10))
-		{
-			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			*point_of_texture = 0;
-			return game->map_width * 10;
-		}
-		else
-		{
-			while(game->splitted_str[(int)ray_end_y / 10][(int)ray_end_x / 10] != '1')
-			{
-				ray_end_x += 10;
-				distance_x = ray_end_x - game->player_coord_x;
-				ray_end_y = game->player_coord_y - tan(angle_of_ray) * distance_x;
-				if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x > (float)(game->map_width * 10 - 10))
-				{
-					//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-					*point_of_texture = 0;
-					return game->map_width * 10;
-				}
-			}
-		}
+		ft_count_raylength_less_90_more_270(game, &ray_creat_info, angle_of_ray);
+
 	}
 	else if(angle_of_ray > DEGREE_90 + ONE_THOUSANDTH_OF_ONE_DEGREE
 			&& angle_of_ray < DEGREE_270 - ONE_THOUSANDTH_OF_ONE_DEGREE)
 	{
-		//printf("MORE THAN 90 AND LESS THAN 270\n");
 		*wall_side_vertical = EA;
-		ray_end_x = (int)game->player_coord_x - remainder - 1;
-		distance_x = game->player_coord_x - ray_end_x;
-		ray_end_y = game->player_coord_y + tan(angle_of_ray) * distance_x;
-		if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)9)
-		{
-			//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-			*point_of_texture = 0;
-			return game->map_width * 10;
-		}
-		while(game->splitted_str[(int)ray_end_y / 10][(int)ray_end_x / 10] != '1')
-		{
-			ray_end_x -= 10;
-			distance_x = game->player_coord_x - ray_end_x;
-			ray_end_y = game->player_coord_y + tan(angle_of_ray) * distance_x;
-			if (ray_end_y < (float)10 || ray_end_y > (float)(game->map_height * 10 - 10) || ray_end_x < (float)9)
-			{
-				//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-				*point_of_texture = 0;
-				return game->map_width * 10;
-			}
-		}
+		ft_count_raylength_more_90_less_270(game, &ray_creat_info, angle_of_ray);
 	}
 	else
 	{
 		*wall_side_vertical = EA;
 		*point_of_texture = 0;
-		return game->map_width * 10;
+		return game->ray_length_max;
 	}
-	ray_length = sqrt(pow(ray_end_x - game->player_coord_x, 2) + pow(ray_end_y - game->player_coord_y, 2));
-	*point_of_texture = (int)ray_end_y;
-	// printf("RAY_END_X: %f  RAY_END_Y: %f\n", ray_end_x, ray_end_yx);
-	// printf("RAY_START_X: %f  RAY_START_Y: %f\n", game->player_coord_x, game->player_coord_y);
-	// printf("RAY_LENGTH: %f\n", ray_length);
-	//mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-	mlx_pixel_put(game->mlx, game->mlx_win, ray_end_x, ray_end_y, 0x00FFFFFF); // for ray_end;
-	return ray_length;
+	if (ray_creat_info.ray_length != game->ray_length_max)
+	{
+		ray_creat_info.ray_length = sqrt(pow(ray_creat_info.ray_end_x - game->player_coord_x, 2) + pow(ray_creat_info.ray_end_y - game->player_coord_y, 2));
+		*point_of_texture = remainderf(ray_creat_info.ray_end_y, (float)10) / 10;
+		if (*point_of_texture < 0)
+			*point_of_texture = -*point_of_texture;
+	}
+	mlx_pixel_put(game->mlx, game->mlx_win, ray_creat_info.ray_end_x, ray_creat_info.ray_end_y, 0x00FFFFFF); // for ray_end;
+	return ray_creat_info.ray_length;
+}
+
+void	ft_count_raylength_less_90_more_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray)
+{
+	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder + 10;
+	ray_creat_info->distance = ray_creat_info->ray_end_x - game->player_coord_x;
+	if(angle_of_ray == DEGREE_0)
+		ray_creat_info->ray_end_y = game->player_coord_y;
+	else
+		ray_creat_info->ray_end_y = game->player_coord_y - tan(angle_of_ray) * ray_creat_info->distance;
+	if (ray_creat_info->ray_end_y < (float)9
+		|| ray_creat_info->ray_end_y > (float)(game->map_height * 10 - 10)
+		|| ray_creat_info->ray_end_x > (float)(game->map_width * 10 - 10))
+		{
+			ray_creat_info->ray_length = game->ray_length_max;
+			return ;
+		}
+	else
+	{
+		while(game->splitted_str[(int)ray_creat_info->ray_end_y / 10][(int)ray_creat_info->ray_end_x / 10] != '1')
+		{
+			ray_creat_info->ray_end_x += 10;
+			ray_creat_info->distance = ray_creat_info->ray_end_x - game->player_coord_x;
+			if(angle_of_ray == DEGREE_0)
+				ray_creat_info->ray_end_y = game->player_coord_y;
+			else
+				ray_creat_info->ray_end_y = game->player_coord_y - tan(angle_of_ray) * ray_creat_info->distance;
+			if (ray_creat_info->ray_end_y < (float)9
+				|| ray_creat_info->ray_end_y > (float)(game->map_height * 10 - 10)
+				|| ray_creat_info->ray_end_x > (float)(game->map_width * 10 - 10))
+			{
+				ray_creat_info->ray_length = game->ray_length_max;
+				return ;
+			}
+		}
+	}
+	return ;
+}
+
+void	ft_count_raylength_more_90_less_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray)
+{
+	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder - 0.0001;
+	ray_creat_info->distance = game->player_coord_x - ray_creat_info->ray_end_x;
+	if(angle_of_ray > DEGREE_180 - ONE_THOUSANDTH_OF_ONE_DEGREE && angle_of_ray < DEGREE_180)
+		ray_creat_info->ray_end_y = game->player_coord_y;
+	else
+		ray_creat_info->ray_end_y = game->player_coord_y + tan(angle_of_ray) * ray_creat_info->distance;
+	if (ray_creat_info->ray_end_y < (float)9
+		|| ray_creat_info->ray_end_y > (float)(game->map_height * 10 - 10)
+		|| ray_creat_info->ray_end_x < (float)9)
+		{
+			ray_creat_info->ray_length = game->ray_length_max;
+			return ;
+		}
+	while(game->splitted_str[(int)ray_creat_info->ray_end_y / 10][(int)ray_creat_info->ray_end_x / 10] != '1')
+	{
+		ray_creat_info->ray_end_x -= 10;
+		ray_creat_info->distance = game->player_coord_x - ray_creat_info->ray_end_x;
+		if(angle_of_ray > DEGREE_180 - ONE_THOUSANDTH_OF_ONE_DEGREE && angle_of_ray < DEGREE_180)
+			ray_creat_info->ray_end_y = game->player_coord_y;
+		else
+			ray_creat_info->ray_end_y = game->player_coord_y + tan(angle_of_ray) * ray_creat_info->distance;
+		if (ray_creat_info->ray_end_y < (float)9
+			|| ray_creat_info->ray_end_y > (float)(game->map_height * 10 - 10)
+			|| ray_creat_info->ray_end_x < (float)9)
+		{
+			ray_creat_info->ray_length = game->ray_length_max;
+			return ;
+		}
+	}
+	return ;
 }

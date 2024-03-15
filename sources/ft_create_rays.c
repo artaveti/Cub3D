@@ -1,54 +1,51 @@
 #include "lib_for_cub3D.h"
 
+void ft_assign_ray_info(t_data	*game, t_ray_info ray_info, int x, float for_fisheye_effect);
+
 void ft_create_rays(t_data	*game)
 {
-	float direction_angle;
-	float ray_to_vertical;
-	float ray_to_horizontal;
-	int wall_side_vertical;
-	int wall_side_horizontal;
-	int point_of_texture_vertical;
-	int point_of_texture_horizontal;
-	int i;
+	t_ray_info ray_info;
+	int x;
+	float for_fisheye_effect;
 	
-	direction_angle = game->direction_angle + DEGREE_30;
-	if(direction_angle > 2 * PI)
-	{
-		direction_angle -= 2 * PI;
-	}
-	// printf("DIRECTION_ANGLE %f\n", game->direction_angle);
-	// printf("DEGREE_30 %f\n", DEGREE_30);
-	// printf("ANGLE %f\n", direction_angle);
-	i = 0;
-	while(i < SIZE_WIDTH_WINDOW_X)
+	ray_info.ray_angle = game->direction_angle + DEGREE_30;
+	if(ray_info.ray_angle > 2 * PI)
+		ray_info.ray_angle -= 2 * PI;
+	x = 0;
+	while(x < SIZE_WIDTH_WINDOW_X)
 	{	
-		ray_to_vertical = ft_create_ray_vertical(game, direction_angle, &wall_side_vertical, &point_of_texture_vertical);
-		ray_to_horizontal = ft_create_ray_horizontal(game, direction_angle, &wall_side_horizontal, &point_of_texture_horizontal);
-		printf("I: %d\n", i);
-		printf("VERTICAL: %f\n", ray_to_vertical);
-		printf("HORIZONTAL: %f\n", ray_to_horizontal);
-		printf("\n");
-		if (ray_to_vertical < ray_to_horizontal)
+
+		for_fisheye_effect = game->direction_angle - ray_info.ray_angle;
+		if (for_fisheye_effect < 0)
+			for_fisheye_effect += 2 * PI;
+		if (for_fisheye_effect > 2 * PI)
+			for_fisheye_effect -= 2 * PI;
+		ft_assign_ray_info(game, ray_info, x, for_fisheye_effect);
+		ray_info.ray_angle -= ONE_STEP_IN_RADIAN_FOR_FOV;
+		if(ray_info.ray_angle < 0)
 		{
-			game->rays_and_walls[i].ray_length = ray_to_vertical;
-			game->rays_and_walls[i].wall_side = wall_side_vertical;
-			game->rays_and_walls[i].point_of_texture = point_of_texture_vertical;
+			ray_info.ray_angle += 2 * PI;
 		}
-		else
-		{
-			game->rays_and_walls[i].ray_length = ray_to_horizontal;
-			game->rays_and_walls[i].wall_side = wall_side_horizontal;
-			game->rays_and_walls[i].point_of_texture = point_of_texture_horizontal;
-		}
-		direction_angle -= ONE_STEP_IN_RADIAN_FOR_FOV;
-		if(direction_angle < 0)
-		{
-			direction_angle += 2 * PI;
-		}
-		// printf("DEGREE_30 %f\n", DEGREE_30);
-		// printf("DIRECTION_ANGLE %f\n", game->direction_angle);
-		// printf("ANGLE %f\n", direction_angle);
-		i++;
+		x++;
+	}
+	return ;
+}
+
+void ft_assign_ray_info(t_data	*game, t_ray_info ray_info, int x, float for_fisheye_effect)
+{
+	ray_info.ray_to_vertical = ft_create_ray_vertical(game, ray_info.ray_angle, &(ray_info.wall_side_vertical), &(ray_info.point_of_texture_vertical));
+	ray_info.ray_to_horizontal = ft_create_ray_horizontal(game, ray_info.ray_angle, &(ray_info.wall_side_horizontal), &(ray_info.point_of_texture_horizontal));
+	if (ray_info.ray_to_vertical < ray_info.ray_to_horizontal)
+	{
+		game->rays_and_walls[x].ray_length = ray_info.ray_to_vertical * cos(for_fisheye_effect);
+		game->rays_and_walls[x].wall_side = ray_info.wall_side_vertical;
+		game->rays_and_walls[x].point_of_texture = ray_info.point_of_texture_vertical;
+	}
+	else
+	{
+		game->rays_and_walls[x].ray_length = ray_info.ray_to_horizontal * cos(for_fisheye_effect);
+		game->rays_and_walls[x].wall_side = ray_info.wall_side_horizontal;
+		game->rays_and_walls[x].point_of_texture = ray_info.point_of_texture_horizontal;
 	}
 	return ;
 }

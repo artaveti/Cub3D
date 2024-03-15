@@ -17,8 +17,19 @@ int	ft_keypress(int key, t_data *game)
 	ft_change_direction_angle(key, game);
  	ft_keypress_only_esc(key, game);
 	// clear pixels
+	//system("leaks cub3D");
+	mlx_clear_window(game->mlx, game->mlx_win);
+	//  free(game->image_for_draw.img);
+	//  free(game->image_for_draw.addr);
+	mlx_destroy_image(game->mlx, game->image_for_draw.img);
+	game->image_for_draw.img = mlx_new_image(game->mlx, SIZE_WIDTH_WINDOW_X, SIZE_HEIGHT_WINDOW_Y); // empty image
+	game->image_for_draw.addr = mlx_get_data_addr(game->image_for_draw.img,
+							&(game->image_for_draw.bits_per_pixel),
+							&(game->image_for_draw.line_length),
+							&(game->image_for_draw.endian)); // empty image
 	ft_create_rays(game);
-	// draw pixels
+	ft_draw_image(game);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->image_for_draw.img, 0, 0); // draw pixels
 
 
 	/*int i;

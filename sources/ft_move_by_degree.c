@@ -35,8 +35,8 @@ void	ft_move_for_sliding(t_data	*game, float   direction_angle, int *player_has_
 	float ray_to_horizontal;
 	int wall_side_vertical;
 	int wall_side_horizontal;
-	int point_of_texture_vertical;
-	int point_of_texture_horizontal;
+	float point_of_texture_vertical;
+	float point_of_texture_horizontal;
 
 	ray_to_vertical = ft_create_ray_vertical(game, direction_angle, &wall_side_vertical, &point_of_texture_vertical);
 	ray_to_horizontal = ft_create_ray_horizontal(game, direction_angle, &wall_side_horizontal, &point_of_texture_horizontal);

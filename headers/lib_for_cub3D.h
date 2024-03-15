@@ -9,13 +9,13 @@
 # include <mlx.h>
 
 # define PI 3.141593
-# define DEGREE_0 0 //0�
-# define DEGREE_30 PI / 6 //30.000013�
-# define DEGREE_45 PI / 4 //44.999991�
+# define DEGREE_0 0 //0
+# define DEGREE_30 PI / 6 //30.000013
+# define DEGREE_45 PI / 4 //44.999991
 # define DEGREE_90 PI / 2 //89.999981
-# define DEGREE_180 PI // 180.00002� 179.999963�(3.141592)
+# define DEGREE_180 PI // 180.00002 179.999963(3.141592)
 # define DEGREE_270 3 * PI / 2 // 270.000001� 269.999944�(3.141592)
-# define DEGREE_360 2 * PI //360.00004� 359.999925�(3.141592)
+# define DEGREE_360 2 * PI //360.00004 359.999925(3.141592)
 # define ONE_DEGREE_TO_RADIAN 0.017453
 # define ONE_RADIAN_TO_DEGREE 57.29578
 # define ONE_THOUSANDTH_OF_ONE_DEGREE 0.000017
@@ -42,11 +42,22 @@
 # define SE 80
 # define BUFFER_SIZE_FOR_GNL 100
 
+typedef struct	s_image_info
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_image_info;
+
 typedef struct s_ray_and_wall
 {
 	float	ray_length;
 	int		wall_side;
-	int		point_of_texture;
+	float	point_of_texture;
 }	t_ray_and_wall;
 
 typedef struct s_data
@@ -57,17 +68,39 @@ typedef struct s_data
 	char	**splitted_str_1;
 	int 	map_width;
 	int		map_height;
-	int 	ray_length_max;
+	float 	ray_length_max;
 	float	player_coord_x;
 	float	player_coord_y;
 	float   direction_angle;
 	float	direction_x;
 	float	direction_y;
-	t_ray_and_wall *rays_and_walls;
+	t_image_info 		*textures;
+	t_image_info 		image_for_draw;
+	t_ray_and_wall	*rays_and_walls;
 	int		xpm_size;
 	void 	*img_wall;
 	char	**splitted_str;
 }	t_data;
+
+typedef struct s_ray_info
+{
+	float ray_angle;
+	float ray_to_vertical;
+	float ray_to_horizontal;
+	int wall_side_vertical;
+	int wall_side_horizontal;
+	float point_of_texture_vertical;
+	float point_of_texture_horizontal;
+}	t_ray_info;
+
+typedef struct s_ray_creat_info
+{
+	float ray_end_x;
+	float ray_end_y;
+	float distance;
+	int remainder;
+	float ray_length;
+}	t_ray_creat_info;
 
 //check
 void	ft_check_argc_and_name(int argc, char *argv[]);
@@ -97,6 +130,14 @@ void	ft_put_error(char *string);
 //int		ft_y_for_mlxwin_size(char **splitted_str);
 //void	ft_put_movement_count(t_data *game);
 
+void	ft_assign_null_values_in_struct(t_data	*game);
+void	ft_assign_null_values_in_struct_image_info(t_image_info *image_info);
+void	ft_free_for_struct(t_data	*game);
+void	ft_free_double_pointer_array(char ***array);
+void	ft_free_struct_image_info(t_image_info *image_info);
+void	ft_set_images_and_get_info(t_data *game);
+void	ft_draw_image(t_data *game);
+void	my_mlx_pixel_put(t_image_info *image_for_draw, int x, int y, unsigned int color);
 int		ft_keypress(int key, t_data *game);
 int		ft_keypress_only_esc(int key, t_data *game);
 int		ft_close_with_cross(t_data *game);
@@ -105,7 +146,7 @@ void	ft_change_direction_angle(int key, t_data	*game);
 void	ft_move_by_degree( t_data	*game, float	direction_angle, int one_step, int *player_has_moved);
 void	ft_move_for_sliding(t_data	*game, float   direction_angle, int *player_has_moved);
 void 	ft_create_rays(t_data	*game);
-float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, int *point_of_texture);
-float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal, int *point_of_texture);
+float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, float *point_of_texture);
+float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal, float *point_of_texture);
 
 #endif
