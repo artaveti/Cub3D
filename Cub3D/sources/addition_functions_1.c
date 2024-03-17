@@ -5,25 +5,6 @@ void	ft_put_error(char *string);
 char	*ft_joined_lines_from_gnl(char *argv[]);
 int		ft_y_for_mlxwin_size(char	**splitted_str);
 
-/*void	ft_put_movement_count(t_data *game)
-{
-	char	*tmp;
-
-	tmp = ft_itoa(game->movement_count);
-	mlx_put_image_to_window (game->mlx, game->mlx_win,
-		game->img_of_wall, 0, 0);
-	mlx_put_image_to_window (game->mlx, game->mlx_win,
-		game->img_of_wall, 40, 0);
-	write(1, "STEP:", 5);
-	write(1, tmp, ft_strlen(tmp));
-	write(1, "\n", 1);
-	game->movement_count++;
-	mlx_string_put(game->mlx, game->mlx_win, 0, 0, 0x000000, "STEPS:");
-	mlx_string_put(game->mlx, game->mlx_win, 80, 0, 0x000000, tmp);
-	free(tmp);
-	return ;
-}*/
-
 void	ft_check_is_file_exist(int fd)
 {
 	if (fd == -1)

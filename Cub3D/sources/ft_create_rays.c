@@ -36,15 +36,13 @@ void ft_assign_ray_info(t_data	*game, t_ray_info ray_info, int x, float for_fish
 	ray_info.ray_to_horizontal = ft_create_ray_horizontal(game, ray_info.ray_angle, &(ray_info.wall_side_horizontal), &(ray_info.point_of_texture_horizontal));
 	if (ray_info.ray_to_vertical < ray_info.ray_to_horizontal)
 	{
-		game->rays_and_walls[x].ray_length = (ray_info.ray_to_vertical / (float)10) * cos(for_fisheye_effect);
-		//printf("%f  %f\n", game->rays_and_walls[x].ray_length, ray_info.ray_to_vertical);
+		game->rays_and_walls[x].ray_length = (ray_info.ray_to_vertical / 10) * cos(for_fisheye_effect);
 		game->rays_and_walls[x].wall_side = ray_info.wall_side_vertical;
 		game->rays_and_walls[x].point_of_texture = ray_info.point_of_texture_vertical;
 	}
 	else
 	{
 		game->rays_and_walls[x].ray_length = (ray_info.ray_to_horizontal / 10) * cos(for_fisheye_effect);
-		//printf("%f  %f\n", game->rays_and_walls[x].ray_length, ray_info.ray_to_horizontal);
 		game->rays_and_walls[x].wall_side = ray_info.wall_side_horizontal;
 		game->rays_and_walls[x].point_of_texture = ray_info.point_of_texture_horizontal;
 	}

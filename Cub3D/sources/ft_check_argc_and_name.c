@@ -17,5 +17,10 @@ void	ft_check_argc_and_name(int argc, char *argv[])
 		ft_put_error("Error: Wrong filename");
 		exit(EXIT_FAILURE);
 	}
+	// if (SIZE_WIDTH_WINDOW_X < 160 || SIZE_HEIGHT_WINDOW_Y < 160)
+	// {
+	// 	ft_put_error("Error: Wrong screen size");
+	// 	exit(EXIT_FAILURE);
+	// }
 	return ;
 }

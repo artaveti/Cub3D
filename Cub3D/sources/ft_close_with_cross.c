@@ -2,8 +2,6 @@
 
 int	ft_close_with_cross(t_data	*game)
 {
-	//mlx_destroy_window(game->mlx, game->mlx_win);
-	free(game->mlx);
-	//system("leaks cub3D");
+	ft_free_for_struct(game);
 	exit(EXIT_SUCCESS);
 }

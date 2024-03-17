@@ -32,20 +32,10 @@ float	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_ve
 	if (ray_creat_info.ray_length != game->ray_length_max)
 	{
 		ray_creat_info.ray_length = sqrt(pow(ray_creat_info.ray_end_x - game->player_coord_x, 2) + pow(ray_creat_info.ray_end_y - game->player_coord_y, 2));
-		// if(ray_creat_info.ray_end_y < 10)
-		// {
-		// 	*point_of_texture = ray_creat_info.ray_end_y / (float)10;
-		// }
-		// else
-		//{
-			//printf("%f\n", fmod((float)ray_creat_info.ray_end_y, (float)10));
-			*point_of_texture = fmod((float)ray_creat_info.ray_end_y, (float)10) / (float)10;
-		//}
+		*point_of_texture = fmod((float)ray_creat_info.ray_end_y, (float)10) / (float)10;
 		if (*point_of_texture < 0)
 			*point_of_texture = -*point_of_texture;
-		//printf("r_y:(%f) p_t:(%f)\n", ray_creat_info.ray_end_y, *point_of_texture);
 	}
-	mlx_pixel_put(game->mlx, game->mlx_win, ray_creat_info.ray_end_x, ray_creat_info.ray_end_y, 0x00FFFFFF); // for ray_end;
 	return ray_creat_info.ray_length;
 }
 
@@ -88,7 +78,7 @@ void	ft_count_raylength_less_90_more_270(t_data	*game, t_ray_creat_info *ray_cre
 
 void	ft_count_raylength_more_90_less_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray)
 {
-	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder - 0.0001;
+	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder - 0.00001;
 	ray_creat_info->distance = game->player_coord_x - ray_creat_info->ray_end_x;
 	if(angle_of_ray > DEGREE_180 - ONE_THOUSANDTH_OF_ONE_DEGREE && angle_of_ray < DEGREE_180)
 		ray_creat_info->ray_end_y = game->player_coord_y;
