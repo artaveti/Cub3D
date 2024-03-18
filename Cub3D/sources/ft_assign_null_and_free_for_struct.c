@@ -5,7 +5,6 @@ void ft_assign_null_values_in_struct(t_data	*game)
 	game->mlx = NULL;
 	game->mlx_win = NULL;
 	game->joined_str = NULL;
-	game->splitted_str_1 = NULL;
 	game->splitted_str = NULL;
 	game->map_width = 0;
 	game->map_height = 0;
@@ -36,8 +35,7 @@ void ft_assign_null_values_in_struct_image_info(t_image_info *image_info)
 void	ft_free_for_struct(t_data	*game)
 {
 	free(game->joined_str);
-	ft_free_double_pointer_array(&(game->splitted_str_1));
-	ft_free_double_pointer_array(&(game->splitted_str));
+	//ft_free_double_pointer_array(&(game->splitted_str));
 	// if (game->textures != NULL)
 	// {
 		//mlx_destroy_image(game->mlx, game->textures[0].img);
@@ -56,7 +54,7 @@ void	ft_free_for_struct(t_data	*game)
 		mlx_destroy_window(game->mlx, game->mlx_win);
 	//free(game->mlx);
 	//mlx_destroy_display(game->mlx); // install libraries
-	system("leaks cub3D");
+	//system("leaks cub3D");
 	return ;
 }
 

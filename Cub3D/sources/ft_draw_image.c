@@ -1,7 +1,8 @@
 #include "lib_for_cub3D.h"
 
-void		ft_mlx_pixel_put_middle_x(t_data *game, int x, int y_middle, int y_end);
 void		ft_assign_start_middle_end_of_x_for_draw(t_data *game, int x, int *y_start, int *y_middle, int *y_end);
+void		ft_mlx_pixel_put_middle_x(t_data *game, int x, int y_middle, int y_end);
+void		ft_for_ft_mlx_pixel_put_middle_x(t_data *game, t_draw_image_info *draw, int y_middle, int y_end);
 
 void	ft_draw_image(t_data *game)
 {
@@ -45,62 +46,6 @@ void	my_mlx_pixel_put(t_data *game, int x, int y, unsigned int color)
 	return ;
 }
 
-void	ft_mlx_pixel_put_middle_x(t_data *game, int x, int y_middle, int y_end)
-{
-	int						pixel_quant;
-	char					*dst;
-	unsigned long long		color;
-	float					step_size;
-	int						wall_side;
-	float					texture_y;
-	float					texture_x;
-	
-	pixel_quant = SIZE_HEIGHT_WINDOW_Y / game->rays_and_walls[x].ray_length;
-	if (game->rays_and_walls[x].wall_side == NO)
-	{
-		wall_side = 0;
-	}
-	else if (game->rays_and_walls[x].wall_side == SO)
-	{
-		wall_side = 1;
-	}
-	else if (game->rays_and_walls[x].wall_side == WE)
-	{
-		wall_side = 2;
-	}
-	else
-	{
-		wall_side = 3;
-	}
-	step_size = (float)(game->textures[wall_side].height) / pixel_quant;
-	if(pixel_quant > SIZE_HEIGHT_WINDOW_Y)
-	{
-		texture_y = (game->textures[wall_side].height - (game->textures[wall_side].height * game->rays_and_walls[x].ray_length)) / 2;
-	}
-	else
-		texture_y = 0;
-	texture_x = game->textures[wall_side].width * game->rays_and_walls[x].point_of_texture;
-	if (texture_x >= game->textures[wall_side].width || texture_y >= game->textures[wall_side].height)
-	{
-		ft_free_for_struct(game);
-		ft_put_error("Error: in ft_mlx_pixel_put_middle_x");
-		exit(EXIT_FAILURE);
-	}
-	while(y_middle < y_end)
-	{
-		dst = game->textures[wall_side].addr + ((int)texture_y * game->textures[wall_side].line_length + (int)texture_x * (game->textures[wall_side].bits_per_pixel / 8));
-		color = *(unsigned int *)dst;
-		my_mlx_pixel_put(game, x, y_middle, color); // color
-		texture_y += step_size;
-		if (texture_y >= (float)(game->textures[wall_side].height))
-		{
-			texture_y = (float)(game->textures[wall_side].height - 1);
-		}
-		y_middle++;
-	}
-	return ;
-}
-
 void	ft_assign_start_middle_end_of_x_for_draw(t_data *game, int x, int *y_start, int *y_middle, int *y_end)
 {
 	int pixel_quant;
@@ -118,5 +63,56 @@ void	ft_assign_start_middle_end_of_x_for_draw(t_data *game, int x, int *y_start,
 	*y_start = 0;
 	*y_middle = SIZE_HEIGHT_WINDOW_Y / 2 - pixel_quant / 2;
 	*y_end = *y_middle + pixel_quant;
+	return ;
+}
+
+void	ft_mlx_pixel_put_middle_x(t_data *game, int x, int y_middle, int y_end)
+{
+	t_draw_image_info draw;
+
+	draw.x = x;
+	draw.pixel_quant = SIZE_HEIGHT_WINDOW_Y
+						/ game->rays_and_walls[x].ray_length;
+	draw.wall_side = game->rays_and_walls[x].wall_side;
+	draw.step_size = (float)(game->textures[draw.wall_side].height)
+						/ draw.pixel_quant;
+	if(draw.pixel_quant > SIZE_HEIGHT_WINDOW_Y)
+		draw.texture_y = (game->textures[draw.wall_side].height -
+					(game->textures[draw.wall_side].height
+					* game->rays_and_walls[x].ray_length)) / 2;
+	else
+		draw.texture_y = 0;
+	draw.texture_x = game->textures[draw.wall_side].width
+				* game->rays_and_walls[x].point_of_texture;
+	if (draw.texture_x >= game->textures[draw.wall_side].width
+		|| draw.texture_y >= game->textures[draw.wall_side].height)
+	{
+		ft_free_for_struct(game);
+		ft_put_error("Error: in ft_mlx_pixel_put_middle_x");
+		exit(EXIT_FAILURE);
+	}
+	ft_for_ft_mlx_pixel_put_middle_x(game, &draw, y_middle, y_end);
+	return ;
+}
+
+void ft_for_ft_mlx_pixel_put_middle_x(t_data *game, t_draw_image_info *draw, int y_middle, int y_end)
+{
+	char					*dst;
+	unsigned long long		color;
+
+	while(y_middle < y_end)
+	{
+		dst = game->textures[draw->wall_side].addr + ((int)(draw->texture_y)
+				* game->textures[draw->wall_side].line_length
+				+ (int)(draw->texture_x)
+				* (game->textures[draw->wall_side].bits_per_pixel / 8));
+		color = *(unsigned int *)dst;
+		my_mlx_pixel_put(game, draw->x, y_middle, color);
+		draw->texture_y += draw->step_size;
+		if (draw->texture_y >= (float)(game->textures[draw->wall_side].height))
+			draw->texture_y = (float)(game->textures[draw->wall_side].height
+								- 1);
+		y_middle++;
+	}
 	return ;
 }
