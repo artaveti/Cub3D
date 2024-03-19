@@ -11,13 +11,13 @@ void	ft_move_by_degree( t_data	*game, float   direction_angle, int one_step, int
 	direction_x = cos(direction_angle);
 	direction_y = sin(direction_angle);
 	move_counter = 0;
-	while(game->splitted_str[(int)game->player_coord_y
+	while(game->map_array[(int)game->player_coord_y
 			/ 10][(int)game->player_coord_x / 10] != '1'
 			&& move_counter < one_step)
 	{
 		game->player_coord_x += direction_x * 2;
 		game->player_coord_y -= direction_y * 2;
-		if (game->splitted_str[(int)game->player_coord_y
+		if (game->map_array[(int)game->player_coord_y
 			/ 10][(int)game->player_coord_x / 10] == '1')
 		{
 			game->player_coord_x -= direction_x * 2;

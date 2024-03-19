@@ -111,8 +111,15 @@ typedef struct s_data
 	int  	f;
 	void	*mlx;
 	void	*mlx_win;
-	char	*joined_str;
-	char	**splitted_str;
+
+	char	*north_texture;
+	char	*south_texture;
+	char	*west_texture;
+	char	*east_texture;
+	char	*floor_color;
+	char	*ceiling_color;
+
+	char	**map_array;
 	int 	map_width;
 	int		map_height;
 	float 	ray_length_max;
@@ -139,8 +146,8 @@ typedef struct s_ray_info
 
 typedef struct s_ray_creat_info
 {
-	float ray_end_x;
-	float ray_end_y;
+	double ray_end_x;
+	double ray_end_y;
 	float distance;
 	int remainder;
 	float ray_length;
