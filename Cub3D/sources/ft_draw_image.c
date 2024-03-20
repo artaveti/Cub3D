@@ -17,13 +17,13 @@ void	ft_draw_image(t_data *game)
 		ft_assign_start_middle_end_of_x_for_draw(game, x, &y_start, &y_middle, &y_end);
 		while(y_start < y_middle)
 		{
-			my_mlx_pixel_put(game, x, y_start, 0x003399FF); // must pass Ceiling color 225,30,0
+			my_mlx_pixel_put(game, x, y_start, game->floor_color);
 			y_start++;
 		}
-		ft_mlx_pixel_put_middle_x(game, x, y_middle, y_end); // must pass Texture color 225,30,0
+		ft_mlx_pixel_put_middle_x(game, x, y_middle, y_end);
 		while(y_end < SIZE_HEIGHT_WINDOW_Y)
 		{
-			my_mlx_pixel_put(game, x, y_end, 0x0000CC00); // must pass Floor color 200,100,0
+			my_mlx_pixel_put(game, x, y_end, game->ceiling_color);
 			y_end++;
 		}
 		x++;

@@ -108,18 +108,19 @@ typedef struct s_ray_and_wall
 
 typedef struct s_data
 {
-	int  	f;
 	void	*mlx;
 	void	*mlx_win;
-
+	char	*map_str;
+	char	**map_splitted_str;
+	char	**map_array;
 	char	*north_texture;
 	char	*south_texture;
 	char	*west_texture;
 	char	*east_texture;
-	char	*floor_color;
-	char	*ceiling_color;
-
-	char	**map_array;
+	char	**floor_color_splitted;
+	char	**ceiling_color_splitted;
+	unsigned int floor_color;
+	unsigned int ceiling_color;
 	int 	map_width;
 	int		map_height;
 	float 	ray_length_max;
@@ -271,22 +272,37 @@ char	**ft_split(char const	*s, char c);
 char	*ft_itoa(int n);
 //addition
 void	ft_put_error(char *string);
+//parsing
+void ft_parsing(t_game	*Game, int argc, char **argv);
 //assign and free
 void	ft_assign_null_values_in_struct(t_data	*game);
 void	ft_assign_null_values_in_struct_image_info(t_image_info *image_info);
 void	ft_free_for_struct(t_data	*game);
 void	ft_free_double_pointer_array(char ***array);
 void	ft_free_struct_image_info(t_image_info *image_info);
+void	ft_malloc_for_rays_walls_textures(t_data *game);
+void	ft_mlx_init_mlx_new_window(t_data	*game);
+//creat map
+void	ft_creat_map_str(t_data	*game, char **argv);
+void	ft_chech_whitespaces_except_space_in_map(t_data	*game);
+void	ft_creat_splitted_map_and_check_only_space_in_line(t_data	*game);
+void	ft_assign_texture_color_only_map_height_width(t_data	*game);
+void	ft_assign_only_map_height_width(t_data	*game, int i);
+void	ft_memset_by_one_only_map(t_data	*game, int i);
+void	ft_assign_only_map(t_data	*game, int i);
+void	ft_assign_height_width(t_data	*game);
+void	ft_assign_player_coord(t_data	*game);
 //direction angle
-void	ft_assign_direction_angle(t_data *game, t_game *Game);
+void	ft_assign_direction_angle(t_data *game, char c);
 //creat rays
 void 	ft_create_rays(t_data	*game);
 float 	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_vertical, float *point_of_texture);
 float 	ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_horizontal, float *point_of_texture);
 void	ft_assign_ray_creat_info(t_ray_creat_info *ray_creat_info);
 //draw image
-void	ft_set_images_and_get_info(t_data *game, t_game *Game);
+void	ft_set_images_and_get_info(t_data *game);
 void	ft_draw_image(t_data *game);
+unsigned int		create_trgb(char *t, char *r, char *g, char *b);
 void	my_mlx_pixel_put(t_data *game, int x, int y, unsigned int color);
 //move
 void	ft_move_by_degree( t_data	*game, float	direction_angle, int one_step, int *player_has_moved);

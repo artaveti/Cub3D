@@ -4,13 +4,15 @@ void ft_assign_null_values_in_struct(t_data	*game)
 {
 	game->mlx = NULL;
 	game->mlx_win = NULL;
+	game->map_str = NULL;
+	game->map_splitted_str = NULL;
+	game->map_array = NULL;
 	game->north_texture = NULL;
 	game->south_texture = NULL;
 	game->west_texture = NULL;
 	game->east_texture = NULL;
-	game->floor_color = NULL;
-	game->ceiling_color = NULL;
-	game->map_array = NULL;
+	game->floor_color_splitted = NULL;
+	game->ceiling_color_splitted = NULL;
 	game->map_width = 0;
 	game->map_height = 0;
 	game->ray_length_max = 0;
@@ -39,12 +41,15 @@ void ft_assign_null_values_in_struct_image_info(t_image_info *image_info)
 
 void	ft_free_for_struct(t_data	*game)
 {
+	free(game->map_str);
+	ft_free_double_pointer_array(&(game->map_splitted_str));
+	ft_free_double_pointer_array(&(game->map_array));
 	free(game->north_texture);
 	free(game->south_texture);
 	free(game->west_texture);
 	free(game->east_texture);
-	free(game->floor_color);
-	free(game->ceiling_color);
+	ft_free_double_pointer_array(&(game->floor_color_splitted));
+	ft_free_double_pointer_array(&(game->ceiling_color_splitted));
 	//ft_free_double_pointer_array(&(game->map_array));
 	// if (game->textures != NULL)
 	// {

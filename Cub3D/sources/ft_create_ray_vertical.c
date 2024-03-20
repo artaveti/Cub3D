@@ -26,7 +26,6 @@ float	ft_create_ray_vertical(t_data	*game, float angle_of_ray, int *wall_side_ve
 	}
 	else
 	{
-		//printf("I am here\n");
 		*wall_side_vertical = EA;
 		*point_of_texture = 0;
 		return game->ray_length_max;
