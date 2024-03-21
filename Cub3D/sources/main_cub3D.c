@@ -1,7 +1,7 @@
 #include "lib_for_cub3D.h"
 
 // if (SIZE_HEIGHT_WINDOW_Y == 0 || SIZE_WIDTH_WINDOW_X == 0) free, exit;
-// map size check ???
+// must check and use difference of ray_length
 
 int	main(int argc, char **argv)
 {
@@ -9,15 +9,16 @@ int	main(int argc, char **argv)
 	t_data	game;
 
 	ft_parsing(&Game, argc, argv);
+//system("leaks cub3D");
 	ft_assign_null_values_in_struct(&game);
 	ft_creat_map_str(&game, argv);
 	ft_chech_whitespaces_except_space_in_map(&game);
 	ft_creat_splitted_map_and_check_only_space_in_line(&game);
 	ft_assign_texture_color_only_map_height_width(&game);
+	ft_check_texture_and_color_quant(&game);
 	ft_malloc_for_rays_walls_textures(&game);
 	ft_mlx_init_mlx_new_window(&game);
  	ft_set_images_and_get_info(&game);
-//system("leaks cub3D");
 	game.ray_length_max = 1000;
 	game.direction_x = cos(game.direction_angle); //x
 	game.direction_y = sin(game.direction_angle); //y
@@ -31,14 +32,12 @@ int	main(int argc, char **argv)
 	exit(EXIT_SUCCESS);
 }
 
-unsigned int	create_trgb(char *t, char *r, char *g, char *b)
-{
-	unsigned int result;
-
-	result = simple_atoi(t) << 24 | simple_atoi(r) << 16 | simple_atoi(g) << 8 | simple_atoi(b);
-	return (result);
-}
-
+	// printf("N:%d\n", game.flags_textures_and_colors_quant.flag_north);
+	// printf("S:%d\n", game.flags_textures_and_colors_quant.flag_south);
+	// printf("W:%d\n", game.flags_textures_and_colors_quant.flag_west);
+	// printf("E:%d\n", game.flags_textures_and_colors_quant.flag_east);
+	// printf("F:%d\n", game.flags_textures_and_colors_quant.flag_floor);
+	// printf("C:%d\n", game.flags_textures_and_colors_quant.flag_ceiling);
 
 // int p;
 // p = 0;

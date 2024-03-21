@@ -16,7 +16,6 @@ void ft_for_check_borders_check(t_game *Game, int new_ind, int new_jind)
 		&& (Game->map[new_ind][new_jind] == '0'
         || is_pl_pos(Game->map[new_ind][new_jind])))
     {
-		//printf("i [%d] j [%d]\n", ind, jind);
         ft_put_error("Error: Map is not closed");
         //system("leaks cub3D");
         exit(EXIT_FAILURE);

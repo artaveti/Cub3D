@@ -77,7 +77,8 @@ void ft_loop_for_ft_count_raylen_less_90_more_270(t_data	*game, t_ray_creat_info
 
 void	ft_count_raylen_more_90_less_270(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray)
 {
-	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder - 0.00001;
+	ray_creat_info->ray_end_x = (int)game->player_coord_x - ray_creat_info->remainder - 0.000001;
+	//printf("X:%f\n", ray_creat_info->ray_end_x);
 	ray_creat_info->distance = game->player_coord_x - ray_creat_info->ray_end_x;
 	if(angle_of_ray > DEGREE_180 - ONE_THOUSANDTH_OF_ONE_DEGREE && angle_of_ray < DEGREE_180)
 		ray_creat_info->ray_end_y = game->player_coord_y;

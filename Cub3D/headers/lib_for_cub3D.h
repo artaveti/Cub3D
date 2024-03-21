@@ -27,7 +27,7 @@
 # define FOV_DEGREE 60
 # define FOV_RADIAN 1.047198
 # define ONE_STEP_IN_RADIAN_FOR_FOV FOV_RADIAN / SIZE_WIDTH_WINDOW_X
-# define ONE_STEP_FOR_MOVE 3
+# define ONE_STEP_FOR_MOVE 5
 # define KEY_W 13
 # define KEY_S 1
 # define KEY_A 0
@@ -106,6 +106,16 @@ typedef struct s_ray_and_wall
 	float	point_of_texture;
 }	t_ray_and_wall;
 
+typedef struct s_textures_and_colors_quant
+{
+	int	flag_north;
+	int	flag_south;
+	int	flag_west;
+	int	flag_east;
+	int flag_floor;
+	int flag_ceiling;
+}	t_textures_and_colors_quant;
+
 typedef struct s_data
 {
 	void	*mlx;
@@ -121,6 +131,7 @@ typedef struct s_data
 	char	**ceiling_color_splitted;
 	unsigned int floor_color;
 	unsigned int ceiling_color;
+	t_textures_and_colors_quant flags_textures_and_colors_quant;
 	int 	map_width;
 	int		map_height;
 	float 	ray_length_max;
@@ -137,8 +148,8 @@ typedef struct s_data
 typedef struct s_ray_info
 {
 	float ray_angle;
-	float ray_to_vertical;
-	float ray_to_horizontal;
+	double ray_to_vertical;
+	double ray_to_horizontal;
 	int wall_side_vertical;
 	int wall_side_horizontal;
 	float point_of_texture_vertical;
@@ -149,9 +160,9 @@ typedef struct s_ray_creat_info
 {
 	double ray_end_x;
 	double ray_end_y;
-	float distance;
+	double distance;
 	int remainder;
-	float ray_length;
+	double ray_length;
 }	t_ray_creat_info;
 
 typedef struct s_draw_image_info
@@ -277,6 +288,7 @@ void ft_parsing(t_game	*Game, int argc, char **argv);
 //assign and free
 void	ft_assign_null_values_in_struct(t_data	*game);
 void	ft_assign_null_values_in_struct_image_info(t_image_info *image_info);
+void	ft_assign_null_in_struct_flags_textures_and_colors_quant(t_data	*game);
 void	ft_free_for_struct(t_data	*game);
 void	ft_free_double_pointer_array(char ***array);
 void	ft_free_struct_image_info(t_image_info *image_info);
@@ -292,6 +304,7 @@ void	ft_memset_by_one_only_map(t_data	*game, int i);
 void	ft_assign_only_map(t_data	*game, int i);
 void	ft_assign_height_width(t_data	*game);
 void	ft_assign_player_coord(t_data	*game);
+void	ft_check_texture_and_color_quant(t_data *game);
 //direction angle
 void	ft_assign_direction_angle(t_data *game, char c);
 //creat rays

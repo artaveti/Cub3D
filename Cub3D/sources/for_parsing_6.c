@@ -59,7 +59,7 @@ void ft_for_is_attribute_check_word_count(int word_count, int num)
 	{
 		ft_put_error("Error: Attribute identifier missing");
         //system("leaks cub3D");
-        exit(1);
+        exit(EXIT_FAILURE);
 	}
 	return ;
 }

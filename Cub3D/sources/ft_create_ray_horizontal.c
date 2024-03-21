@@ -37,7 +37,8 @@ float ft_create_ray_horizontal(t_data	*game, float angle_of_ray, int *wall_side_
 
 void	ft_count_raylen_less_180_more_0(t_data	*game, t_ray_creat_info *ray_creat_info, float angle_of_ray)
 {
-	ray_creat_info->ray_end_y = (int)game->player_coord_y - ray_creat_info->remainder - 0.00001;
+	ray_creat_info->ray_end_y = (int)game->player_coord_y - ray_creat_info->remainder - 0.000001;
+	//printf("Y:%f\n", ray_creat_info->ray_end_y);
 	ray_creat_info->distance = game->player_coord_y - ray_creat_info->ray_end_y;
 	if(angle_of_ray > DEGREE_90 && angle_of_ray < DEGREE_90 + ONE_THOUSANDTH_OF_ONE_DEGREE)
 		ray_creat_info->ray_end_x = game->player_coord_x;

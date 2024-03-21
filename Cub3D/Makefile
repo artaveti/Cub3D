@@ -7,15 +7,13 @@ SOURCE_FILES	= $(wildcard $(SOURCES_DIR)/*.c)
 OBJECT_FILES	= $(patsubst $(SOURCES_DIR)/%.c, $(OBJECTS_DIR)/%.o, $(SOURCE_FILES))
 
 CC 		= cc
-CFLAGS 	= -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS 	= -Wall -Wextra -Werror #-g -fsanitize=address #-lX11 -lXext -lmlx
 INC 	= -I
 MLX		= mlx
 TO_LINK = -l mlx -framework OpenGL -framework AppKit
 AR 		= ar rcs
 RM 		= rm -rf
 MK 		= mkdir -p
-
-#-lX11 -lXext -lmlx
 
 all: $(OBJECTS_DIR) $(NAME)
 

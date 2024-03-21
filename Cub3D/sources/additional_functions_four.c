@@ -57,3 +57,41 @@ void ft_mlx_init_mlx_new_window(t_data	*game)
 	}
 	return ;
 }
+
+void	ft_check_texture_and_color_quant(t_data *game)
+{
+	if (game->flags_textures_and_colors_quant.flag_north != 1
+		|| game->flags_textures_and_colors_quant.flag_south != 1
+		|| game->flags_textures_and_colors_quant.flag_west != 1
+		|| game->flags_textures_and_colors_quant.flag_east != 1
+		|| game->flags_textures_and_colors_quant.flag_floor != 1
+		|| game->flags_textures_and_colors_quant.flag_ceiling != 1)
+	{
+		ft_free_for_struct(game);
+		ft_put_error("Error: ivalid count NO || SO || WE || EA");
+		//system("leaks cub3D");
+		exit(EXIT_FAILURE);
+	}
+	return ;
+}
+
+int	ft_strncmp(const char	*s1, const char	*s2, size_t	n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while (*s1 && *s2 && i < n - 1)
+	{
+		if ((unsigned char) *s1 == (unsigned char) *s2)
+		{
+			s1++;
+			s2++;
+			i++;
+		}
+		else
+			return ((unsigned char) *s1 - (unsigned char) *s2);
+	}
+	return ((unsigned char) *s1 - (unsigned char) *s2);
+}

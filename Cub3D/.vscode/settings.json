@@ -6,6 +6,7 @@
         "complex": "c",
         "lib_for_cub3d.h": "c",
         "stdio.h": "c",
-        "__node_handle": "c"
+        "__node_handle": "c",
+        "memory": "c"
     }
 }

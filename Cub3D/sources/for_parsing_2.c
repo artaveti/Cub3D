@@ -1,5 +1,7 @@
 #include "lib_for_cub3D.h"
 
+void	ft_assign_line_to_map(char	*dst, char *src, size_t num);
+
 void copy_map_lines(int fd, t_game *Game)
 {
     char *line;
@@ -16,17 +18,30 @@ void copy_map_lines(int fd, t_game *Game)
             //system("leaks cub3D");
             exit(EXIT_FAILURE);
         }
-        Game->map[line_count] = ft_calloc(Game->width + 1, sizeof(char)); // +1  null
+        Game->map[line_count] = ft_calloc(Game->width + 1, sizeof(char));
         if (Game->map[line_count] == NULL) 
         {
             ft_put_error("Error: Memory allocation failed");
             //system("leaks cub3D");
             exit(EXIT_FAILURE);
         }
-        strncpy(Game->map[line_count], line, ft_strlen(line)); //ft_strlcpy
+		ft_assign_line_to_map(Game->map[line_count], line, ft_strlen(line));
 		free(line);
         line_count++;
     }
+	return ;
+}
+
+void	ft_assign_line_to_map(char	*dst, char *src, size_t num)
+{
+	size_t i;
+
+	i = 0;
+	while(i < num)
+	{
+		dst[i] = src[i];
+		i++;
+	}
 	return ;
 }
 
@@ -75,25 +90,4 @@ size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 	}
 	*dst = '\0';
 	return (len);
-}
-
-int	ft_strncmp(const char	*s1, const char	*s2, size_t	n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (*s1 && *s2 && i < n - 1)
-	{
-		if ((unsigned char) *s1 == (unsigned char) *s2)
-		{
-			s1++;
-			s2++;
-			i++;
-		}
-		else
-			return ((unsigned char) *s1 - (unsigned char) *s2);
-	}
-	return ((unsigned char) *s1 - (unsigned char) *s2);
 }

@@ -13,6 +13,7 @@ void ft_assign_null_values_in_struct(t_data	*game)
 	game->east_texture = NULL;
 	game->floor_color_splitted = NULL;
 	game->ceiling_color_splitted = NULL;
+	ft_assign_null_in_struct_flags_textures_and_colors_quant(game);
 	game->map_width = 0;
 	game->map_height = 0;
 	game->ray_length_max = 0;
@@ -50,7 +51,7 @@ void	ft_free_for_struct(t_data	*game)
 	free(game->east_texture);
 	ft_free_double_pointer_array(&(game->floor_color_splitted));
 	ft_free_double_pointer_array(&(game->ceiling_color_splitted));
-	//ft_free_double_pointer_array(&(game->map_array));
+	// ft_free_double_pointer_array(&(game->map_array));
 	// if (game->textures != NULL)
 	// {
 		//mlx_destroy_image(game->mlx, game->textures[0].img);
@@ -60,7 +61,7 @@ void	ft_free_for_struct(t_data	*game)
 	// 	ft_free_struct_image_info(&(game->textures[3]));
 	// 	free(game->textures);
 	// }
-	//ft_free_struct_image_info(&(game->image_for_draw));
+	// ft_free_struct_image_info(&(game->image_for_draw));
 	// free(game->image_for_draw.img);
 	// free(game->image_for_draw.addr);
 	// mlx_destroy_image(game->mlx, game->image_for_draw.img);

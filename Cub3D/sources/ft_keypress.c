@@ -7,6 +7,8 @@ int	 ft_keypress_only_esc(int key, t_data	*game);
 
 int	ft_keypress(int key, t_data *game)
 {
+	printf("BEFORE: Y:(%f) X:(%f)\n", game->player_coord_y, game->player_coord_x);
+	//printf("ANGLE:(%f)\n", game->direction_angle);
 	ft_change_player_coord_front_back(key, game);
 	ft_change_player_coord_left_right(key, game);
 	ft_change_direction_angle(key, game);
@@ -21,6 +23,7 @@ int	ft_keypress(int key, t_data *game)
 	ft_create_rays(game);
 	ft_draw_image(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->image_for_draw.img, 0, 0); // draw pixels
+	printf("AFTER: Y:(%f) X:(%f)\n", game->player_coord_y, game->player_coord_x);
 	return (0);
 }
 
@@ -104,6 +107,7 @@ int	ft_keypress_only_esc(int key, t_data	*game)
 	if (key == KEY_ESC)
 	{
 		ft_free_for_struct(game);
+		printf("Exit\n");
 		exit(EXIT_SUCCESS);
 	}
 	return (0);

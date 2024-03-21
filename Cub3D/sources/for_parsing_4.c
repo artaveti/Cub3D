@@ -79,26 +79,17 @@ int check_color_c(char *line)
 
 void check_attr_identif(t_game *Game)
 {
-    (void)Game;
     if (!check_color_f(Game->attr.f))
     {
         ft_put_error("Invalid color");
         //system("leaks cub3D");
-        // free_map(Game);
-        // free_attributes(Game);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     else if (!check_color_c(Game->attr.c))
     {
         ft_put_error("Invalid color");
         //system("leaks cub3D");
-        // free_map(Game);
-        // free_attributes(Game);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
-
-    // Check other attribute paths like 'no', 'so', 'ea', 'we'
-    // If they are not valid or don't end with '.xpm', exit(1)
-
     return ;
 }

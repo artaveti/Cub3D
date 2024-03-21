@@ -15,6 +15,8 @@ void	ft_assign_texture_color_only_map_height_width(t_data	*game)
 			texture_or_color_splitted = ft_split(game->map_splitted_str[i], ' ');
 			if (texture_or_color_splitted[0] == NULL)
 			{
+				ft_free_double_pointer_array(&texture_or_color_splitted);
+				ft_free_for_struct(game);
 				ft_put_error("Error: Wrong symbol in file");
 				exit(EXIT_FAILURE);
 			}
@@ -36,21 +38,25 @@ void	ft_assign_texture_or_color_N_S_W_E(t_data	*game, char **texture_or_color_sp
 {
 	if(texture_or_color_splitted[0][0] == 'N')
 	{
+		game->flags_textures_and_colors_quant.flag_north++;
 		free(game->north_texture);
 		game->north_texture = ft_strdup(texture_or_color_splitted[1]);
 	}
 	else if(texture_or_color_splitted[0][0] == 'S')
 	{
+		game->flags_textures_and_colors_quant.flag_south++;
 		free(game->south_texture);
 		game->south_texture = ft_strdup(texture_or_color_splitted[1]);
 	}
 	else if(texture_or_color_splitted[0][0] == 'W')
 	{
+		game->flags_textures_and_colors_quant.flag_west++;
 		free(game->west_texture);
 		game->west_texture = ft_strdup(texture_or_color_splitted[1]);
 	}
 	else if(texture_or_color_splitted[0][0] == 'E')
 	{
+		game->flags_textures_and_colors_quant.flag_east++;
 		free(game->east_texture);
 		game->east_texture = ft_strdup(texture_or_color_splitted[1]);
 	}
@@ -61,6 +67,7 @@ void	ft_assign_texture_or_color_E_F_C(t_data	*game, char **texture_or_color_spli
 {
 	if(texture_or_color_splitted[0][0] == 'F')
 	{
+		game->flags_textures_and_colors_quant.flag_floor++;
 		free(game->floor_color_splitted);
 		game->floor_color_splitted = ft_split(texture_or_color_splitted[1], ',');
 		game->floor_color = create_trgb("0",
@@ -70,6 +77,7 @@ void	ft_assign_texture_or_color_E_F_C(t_data	*game, char **texture_or_color_spli
 	}
 	else if(texture_or_color_splitted[0][0] == 'C')
 	{
+		game->flags_textures_and_colors_quant.flag_ceiling++;
 		free(game->ceiling_color_splitted);
 		game->ceiling_color_splitted = ft_split(texture_or_color_splitted[1], ',');
 		game->ceiling_color = create_trgb("0",

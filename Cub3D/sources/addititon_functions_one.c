@@ -10,6 +10,7 @@ void	ft_chech_whitespaces_except_space_in_map(t_data	*game)
 		if(game->map_str[i] == '\t' || game->map_str[i] == '\v'
 			|| game->map_str[i] == '\f' || game->map_str[i] == '\r')
 		{
+			ft_free_for_struct(game);
 			ft_put_error("Error: Wrong symbol in file");
 			exit(EXIT_FAILURE);
 		}
@@ -22,22 +23,23 @@ void	ft_creat_splitted_map_and_check_only_space_in_line(t_data	*game)
 {
 	int i;
 	int j;
-	int flag_space;
+	int char_except_space;
 
 	game->map_splitted_str = ft_split(game->map_str, '\n');
 	i = 0;
 	while(game->map_splitted_str[i] != NULL)
 	{
 		j = 0;
-		flag_space = 0;
+		char_except_space = 0;
 		while(game->map_splitted_str[i][j] != '\0')
 		{
 			if(game->map_splitted_str[i][j] != ' ')
-				flag_space = 1;
+				char_except_space = 1;
 			j++;
 		}
-		if(flag_space == 0)
+		if(char_except_space == 0)
 		{
+			ft_free_for_struct(game);
 			ft_put_error("Error: Wrong symbol in file");
 			exit(EXIT_FAILURE);
 		}
@@ -70,5 +72,6 @@ void	ft_assign_direction_angle(t_data *game, char c)
 int	ft_close_with_cross(t_data	*game)
 {
 	ft_free_for_struct(game);
+	printf("Exit\n");
 	exit(EXIT_SUCCESS);
 }

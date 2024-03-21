@@ -41,8 +41,8 @@ void	ft_assign_height_width(t_data	*game)
 	game->map_width = x;
 	if(game->map_height > 60 || game->map_width > 60)
 	{
-		ft_put_error("Error: Large map size");
 		ft_free_for_struct(game);
+		ft_put_error("Error: Large map size");
 		exit(EXIT_FAILURE);
 	}
 	return ;
@@ -82,5 +82,16 @@ void ft_assign_only_map_height_width(t_data	*game, int i)
 	ft_assign_only_map(game, i);
 	ft_assign_height_width(game);
 	ft_assign_player_coord(game);
+	return ;
+}
+
+void	ft_assign_null_in_struct_flags_textures_and_colors_quant(t_data	*game)
+{
+	game->flags_textures_and_colors_quant.flag_north = 0;
+	game->flags_textures_and_colors_quant.flag_south = 0;
+	game->flags_textures_and_colors_quant.flag_west = 0;
+	game->flags_textures_and_colors_quant.flag_east = 0;
+	game->flags_textures_and_colors_quant.flag_floor = 0;
+	game->flags_textures_and_colors_quant.flag_ceiling = 0;
 	return ;
 }
