@@ -7,6 +7,9 @@
         "lib_for_cub3d.h": "c",
         "stdio.h": "c",
         "__node_handle": "c",
-        "memory": "c"
+        "memory": "c",
+        "__locale": "c",
+        "istream": "c",
+        "string": "c"
     }
 }

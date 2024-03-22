@@ -1,47 +1,45 @@
 #include "lib_for_cub3D.h"
 
-void ft_assing_in_ft_move_for_sliding(t_data	*game, t_move_sliding_info *sliding, float   direction_angle);
+void	ft_assing_in_ft_move_for_sliding(t_data	*game, t_move_sliding_info *sliding, float   direction_angle);
+void	ft_assign_difference_for_step_back(t_move_sliding_info *move, float *difference_for_step_back);
 
 void	ft_move_by_degree( t_data	*game, float   direction_angle, int one_step, int *player_has_moved)
 {
 	float	direction_x;
 	float	direction_y;
 	int 	move_counter;
+	float	difference_for_step_back;
 	t_move_sliding_info move;
-	//printf("ANGLE:(%f)\n", direction_angle);
-ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
-if (move.ray_to_vertical <= 1 || move.ray_to_horizontal <= 1)
-{
-	return;
-}
-	direction_x = cos(direction_angle);
+//printf("ANGLE:(%f)\n", direction_angle);
+	ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
+	if (move.ray_to_vertical < 1.1 || move.ray_to_horizontal < 1.1)
+		return;                                                    
+	direction_x = cos(direction_angle);                             
 	direction_y = sin(direction_angle);
-	printf("direction_x:(%f) direction_y:(%f)\n", direction_x, direction_y);
 	move_counter = 0;
+	difference_for_step_back = 0;
 	while(move_counter < one_step)
 	{
 		game->player_coord_x += direction_x;
 		game->player_coord_y -= direction_y;
-ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
-//printf("vertical: %f horizontal %f \n",move.ray_to_vertical, move.ray_to_horizontal);
-if (move.ray_to_vertical <= 1 || move.ray_to_horizontal <= 1)
-{
-	game->player_coord_x -= direction_x;
-	game->player_coord_y += direction_y;
-	return;
-}
-		// if (game->map_array[(int)game->player_coord_y
-		// 	/ 10][(int)game->player_coord_x / 10] == '1')
-		// {
-		// 	game->player_coord_x -= direction_x * 2;
-		// 	game->player_coord_y += direction_y * 2;
-		// 	return ;
-		// }
+//printf("direction_x:(%f) direction_y:(%f)\n", direction_x, direction_y);
+		ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
+//printf("move.ray_to_vertical:(%f) move.ray_to_horizontal:(%f)\n", move.ray_to_vertical, move.ray_to_horizontal);
+		if (move.ray_to_vertical < 1.1 || move.ray_to_horizontal < 1.1)
+		{
+			ft_assign_difference_for_step_back(&move, &difference_for_step_back);
+printf("difference_for_step_back:(%f)\n", difference_for_step_back);
+			game->player_coord_x -= (direction_x * difference_for_step_back);
+			game->player_coord_y += (direction_y * difference_for_step_back);
+printf("IN direction_x:(%f) direction_y:(%f)\n", direction_x, direction_y);
+printf("IN direction_x:(%f) direction_y:(%f)\n", direction_x * difference_for_step_back, direction_y * difference_for_step_back);
+			return;
+		}
 		*player_has_moved = 1;
 		move_counter++;
 	}
-ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
-printf("vertical: %f horizontal %f \n",move.ray_to_vertical, move.ray_to_horizontal);
+	//ft_assing_in_ft_move_for_sliding(game, &move, direction_angle);
+//printf("vertical: %f horizontal %f \n",move.ray_to_vertical, move.ray_to_horizontal);
 	return ;
 }
 
@@ -84,5 +82,24 @@ void ft_assing_in_ft_move_for_sliding(t_data	*game, t_move_sliding_info *sliding
 						direction_angle,
 						&(sliding->wall_side_horizontal),
 						&(sliding->point_of_texture_horizontal));
+	return ;
+}
+void	ft_assign_difference_for_step_back(t_move_sliding_info *move, float *difference_for_step_back)
+{
+	if (move->ray_to_vertical <= move->ray_to_horizontal)
+	{
+		// if (move->ray_to_vertical >= 1)
+		// 	*difference_for_step_back = 1;
+		// else
+			*difference_for_step_back = 1 - move->ray_to_vertical;
+	}
+	else
+	{
+		// if(move->ray_to_horizontal >= 1)
+		// 	*difference_for_step_back = 1;
+		// else
+			*difference_for_step_back = 1 - move->ray_to_horizontal;
+	}
+//printf("DIFF:(%f)\n", *difference_for_step_back);
 	return ;
 }

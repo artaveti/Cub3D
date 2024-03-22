@@ -81,6 +81,43 @@ char	*get_next_line(int fd)
 	char		*result;
 	int			i;
 
+	if (ft_assign_result_in_get_next_line(fd, &result, &i) == 0)
+		return (NULL);
+	while (1)
+	{
+		if (buf_index >= bytes_read)
+			if(ft_ft_check_in_get_next_line_one(&buf_index, &bytes_read, fd,
+												buf) == 0)
+				break;
+		if (buf[buf_index] == '\n')
+			return (ft_ft_check_in_get_next_line_two(result, i, &buf_index));
+		else if (buf[buf_index] == '\0')
+			return(ft_ft_check_in_get_next_line_three(result, i, &buf_index));
+		ft_for_get_next_line(result, &i, buf, &buf_index);
+		if (i >= BUFFER_SIZE)
+			return (ft_free_and_return_null_in_get_next_line(result));
+	}
+	if (i > 0)
+		return(ft_check_in_get_next_line_five(result, i));
+	return (ft_free_and_return_null_in_get_next_line(result));
+}
+
+	// if (fd < 0 || BUFFER_SIZE <= 0)
+	// 	return (NULL);
+	// result = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	// if (!result)
+	// 	return (NULL);
+	// i = 0;
+
+/*char	*get_next_line(int fd)
+{
+	static char	buf[BUFFER_SIZE + 1];
+	static int	buf_index;
+	static int	bytes_read;
+	char		*result;
+	int			i;
+
+printf("buf_index:(%d)\n", buf_index);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	result = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -131,5 +168,4 @@ char	*get_next_line(int fd)
 	}
 	free(result);
 	return (NULL);
-}
-
+}*/

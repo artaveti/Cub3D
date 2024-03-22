@@ -1,17 +1,19 @@
 NO /Users/artaveti/Desktop/Cub3D/xpm_files/NO(bluestone).xpm     
 SO /Users/artaveti/Desktop/Cub3D/xpm_files/SO(colorstone).xpm 
 WE /Users/artaveti/Desktop/Cub3D/xpm_files/WE(redbrick).xpm
-EA /Users/artaveti/Desktop/Cub3D/xpm_files/EA(purplestone).xpm 
+EA /Users/artaveti/Desktop/Cub3D/xpm_files/EA(purplestone).xpm
 
 C 0,204,0
 F 51,153,255
 
 
-111111111111111111111
-1000000000000000000E1
-100000000000000000001
-100000000000000000001
-100000000000000000001
-100000000000000000001
-100000000000000000001
-111111111111111111111
+1111111111
+10010000S1
+1000100001
+1000010001
+1000000001
+1000000001
+1000000001
+1000000001
+1000000001
+1111111111

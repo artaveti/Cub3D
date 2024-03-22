@@ -43,6 +43,14 @@
 # define  BUFFER_SIZE 10000 // compare with lib_for_cub3d.h
 
 
+// typedef struct s_get_next_line_info
+// {
+// 	static char	buf[BUFFER_SIZE + 1];
+// 	static int	buf_index;
+// 	static int	bytes_read;
+// 	char		*result;
+// 	int			i;
+// } t_get_next_line_info;
 
 typedef struct attr_count
 {
@@ -198,7 +206,14 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strchr(char *s, int c);
 size_t	ft_strlen(char	*s);
-
+char	*ft_free_and_return_null_in_get_next_line(char		*result);
+int		ft_assign_result_in_get_next_line(int fd, char		**result, int *i);
+int		ft_ft_check_in_get_next_line_one(int *buf_index, int *bytes_read, int fd, char buf[BUFFER_SIZE + 1]);
+char	*ft_ft_check_in_get_next_line_two(char		*result, int i, int *buf_index);
+char	*ft_ft_check_in_get_next_line_three(char *result, int i, int *buf_index);
+char	*ft_ft_check_in_get_next_line_four(char *result, int i, int *buf_index);
+char  	*ft_check_in_get_next_line_five(char *result, int i);
+void	ft_for_get_next_line(char *result, int *i, char *buf, int	*buf_index);
 //for parsing
 //1
 void	free_map(t_game *Game);
